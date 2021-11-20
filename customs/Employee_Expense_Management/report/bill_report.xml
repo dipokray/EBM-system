@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_bill_details_id">
+        <t t-foreach="docs" t-as="o">
+            <div t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 14px !important;">
+                        <div class="oe_structure"/>
+                        <div class="text-center">
+                        </div>
+                        <h2>EBM NO : #
+                            <span t-field="o.ebm_sequence"/>
+                        </h2>
+                        <br/>
+                        <div class="row ">
+                            <div class="col-8">
+                                <h6>
+                                    <b>Creator :</b>
+                                    <span t-field="o.user"/>
+                                </h6>
+                                <h6>
+                                    <b>Department :</b>
+                                    <span t-field="o.dept"/>
+                                </h6>
+                                <h6>
+                                    <b>Create Date :</b>
+                                    <span t-field="o.ebm_date"/>
+                                </h6>
+                            </div>
+                            <div class="col-4 text-left" style="padding-left:58px;">
+                                <h6>
+                                    <b>Employee :</b>
+                                    <span t-field="o.employee_id"/>
+                                </h6>
+                                <h6>
+                                    <b>Department :</b>
+                                    <span t-field="o.expense_dept"/>
+                                </h6>
+                            </div>
+                        </div>
+                        <hr class="hr-sm mb-0"/>
+                        <br/>
+                        <br/>
+                        <div class="row ">
+                            <div class="col-6">
+                                <h3>Billing</h3>
+                            </div>
+                            <div class="col-6 text-left" style="padding-left:58px;">
+                                <h5>
+                                    <b>Total Bill Amount :</b>
+                                    <span t-field="o.total_billing_amount"/>
+                                </h5>
+                            </div>
+                        </div>
+                        <hr class="hr-sm mb-0"/>
+                        <t t-if="o.entertainment_expense_line_ids">
+                            <h4>Entertainment :</h4>
+                            <table class="table table-sm o_main_table" name="Entertainment">
+                                <thead>
+                                    <tr>
+                                        <th name="th_product_id" class="text-left">
+                                            <span>Product Name</span>
+                                        </th>
+                                        <th name="th_req_qty" class="text-left">
+                                            <span>Quantity</span>
+                                        </th>
+                                        <th name="th_unit_cost" class="text-left">
+                                            <span>Unit Cost</span>
+                                        </th>
+                                        <th name="th_payment_date" class="text-left">
+                                            <span>Payment Date</span>
+                                        </th>
+                                        <th name="th_entertainment_bill_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.entertainment_expense_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.req_qty"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.unit_cost"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.payment_date"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.entertainment_bill_amount"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+
+                            </table>
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-3">
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_subtotal_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.entertainment_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+
+                        <t t-if="o.conveyance_expense_line_ids">
+                            <h4>Conveyance :</h4>
+                            <table class="table table-sm o_main_table" name="Conveyance">
+                                <thead>
+                                    <tr>
+                                        <th name="th_product_id" class="text-left">
+                                            <span>Product Name</span>
+                                        </th>
+                                        <th name="th_con_from" class="text-left">
+                                            <span>From</span>
+                                        </th>
+                                        <th name="th_con_to" class="text-left">
+                                            <span>To</span>
+                                        </th>
+                                        <th name="th_payment_date" class="text-left">
+                                            <span>Payment Date</span>
+                                        </th>
+                                        <th name="th_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.conveyance_expense_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.con_from"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.con_to"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.payment_date"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.conveyance_bill_amount"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+
+                            </table>
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-3">
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_total_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.conveyance_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                        <div t-if="o.miscellaneous_expense_line_ids">
+                            <h4>Miscellaneous :</h4>
+                            <table class="table table-sm o_main_table" name="Miscellaneous">
+                                <thead>
+                                    <tr>
+                                        <th name="th_product_id" class="text-left">
+                                            <span>Product Name</span>
+                                        </th>
+                                        <th name="th_name" class="text-left">
+                                            <span>Name</span>
+                                        </th>
+                                        <th name="th_designation" class="text-left">
+                                            <span>Designation</span>
+                                        </th>
+                                        <th name="th_dept" class="text-left">
+                                            <span>Department</span>
+                                        </th>
+                                        <th name="th_dist" class="text-left">
+                                            <span>District</span>
+                                        </th>
+                                        <th name="th_phone" class="text-left">
+                                            <span>Phone No</span>
+                                        </th>
+                                        <th name="th_payment_date" class="text-left">
+                                            <span>Payment Date</span>
+                                        </th>
+                                        <th name="th_work_place" class="text-left">
+                                            <span>Work Place</span>
+                                        </th>
+                                        <th name="th_purpose" class="text-left">
+                                            <span>Purpose</span>
+                                        </th>
+                                        <th name="th_miscellaneous_bill_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.miscellaneous_expense_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.designation"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.dept"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.dist"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.phone"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.payment_date"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.work_place"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.purpose"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.miscellaneous_bill_amount"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+
+                            </table>
+                            <div class="col-6"/>
+                            <div id="total" class="row justify-content-end">
+                                <div>
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_total_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.miscellaneous_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+</odoo>

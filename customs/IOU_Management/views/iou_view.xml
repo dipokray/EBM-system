@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action view -->
+
+    <record id="action_iou_management" model="ir.actions.act_window">
+        <field name="name">IOU</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">iou.management</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your New IOU Record !!!
+            </p>
+        </field>
+    </record>
+
+    <!-- from view -->
+
+    <record id="view_iou_form" model="ir.ui.view">
+        <field name="name">iou.management.form</field>
+        <field name="model">iou.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <!--  For Sequence Id-->
+                    <div class="oe_title">
+                        <h3>
+                            <field name="iou_no" readonly="1"/>
+                        </h3>
+                    </div>
+                    <!--   End    -->
+                    <group>
+
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="dept" readonly="1"/>
+<!--                            <field name="expense_dept_for"/>-->
+<!--                            <field name="employee_id" attrs="{'invisible':[('expense_dept_for','=','own')]}"/>-->
+                            <field name="employee_id"/>
+                            <field name="expense_dept"/>
+                        </group>
+                        <group>
+                            <field name="iou_date"/>
+                            <field name="required_date"/>
+                            <field name="reference"/>
+                            <field name="requested_amount"/>
+                            <field name="purpose"/>
+                        </group>
+                    </group>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view-->
+
+    <record id="view_iou_tree" model="ir.ui.view">
+        <field name="name">iou.management.tree</field>
+        <field name="model">iou.management</field>
+        <field name="arch" type="xml">
+            <tree sample="1" multi_edit="1">
+                <field name="iou_no"/>
+                <field name="name"/>
+                <field name="dept"/>
+                <field name="employee_id" />
+                <field name="expense_dept"/>
+                <field name="iou_date" optional="show"/>
+                <field name="required_date" optional="show"/>
+                <field name="reference" optional="show"/>
+                <field name="requested_amount" optional="show"/>
+                <field name="purpose" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+     <menuitem id="menu_IOU_management_root"
+              name="IOU Management"
+              web_icon="IOU_Management,static/description/icon.png"
+              sequence="2"/>
+
+     <menuitem id="menu_IOU_root"
+              name="IOU"
+              parent="menu_IOU_management_root"
+              sequence="10"/>
+    <menuitem id="menu_IOU"
+              name="Create IOU"
+              parent="menu_IOU_root"
+              action="action_iou_management"
+              sequence="20"/>
+
+
+</odoo>

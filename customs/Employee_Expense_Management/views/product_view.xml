@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action view -->
+
+    <record id="action_ebm_product" model="ir.actions.act_window">
+        <field name="name">Product</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ebm.product</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your New EBM Product !!!
+            </p>
+        </field>
+    </record>
+    <!--form view-->
+    <record id="view_ebm_product_form" model="ir.ui.view">
+        <field name="name">ebm.product.form</field>
+        <field name="model">ebm.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="product_img" widget ='image' class ='oe_avatar'/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="unit_cost"/>
+                            <field name="note"/>
+                        </group>
+                        <group>
+                            <field name="is_entertainment"/>
+                            <field name="is_conveyance"/>
+                            <field name="is_miscellaneous"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--Tree view-->
+    <record id="view_ebm_product_tree" model="ir.ui.view">
+        <field name="name">ebm.product.tree</field>
+        <field name="model">ebm.product</field>
+        <field name="arch" type="xml">
+            <tree sample="1" multi_edit="1">
+                <!--                <field name="ebm_no"/>-->
+                <field name="name"/>
+                <field name="is_entertainment" optional="show"/>
+                <field name="is_conveyance" optional="show"/>
+                <field name="is_miscellaneous" optional="show"/>
+                <field name="unit_cost" optional="show"/>
+                <field name="note" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    Kanban view-->
+
+    <record id="view_product_kanban" model="ir.ui.view">
+        <field name="name">ebm.product.kanban</field>
+        <field name="model">ebm.product</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="product_img" widget ='image' class ='oe_avatar'/>
+                <field name="name"/>
+                <field name="unit_cost"/>
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oo_kanban_global_click">
+                            <div class="oo_kanban_details">
+                                <ul style="list-style: none;">
+                                    <li>
+                                        <field name="product_img" widget ='image' class ='oe_avatar'/>
+                                    </li>
+                                    <li>
+                                        Name :
+                                        <field name="name"/>
+                                    </li>
+                                    <li>
+                                        Price :
+                                        <field name="unit_cost"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_product_root"
+              name="Product"
+              parent="menu_EBM_management_root"
+              sequence="10"/>
+
+    <menuitem id="menu_product_create"
+              name="Products"
+              parent="menu_product_root"
+              action="action_ebm_product"
+              sequence="20"/>
+
+
+</odoo>

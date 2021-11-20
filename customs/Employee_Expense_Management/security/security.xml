@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+    <record model="ir.module.category" id="module_ebm_management">
+        <field name="name">EBM Management </field>
+        <field name="description"> Category of Advance Cash Management </field>
+        <field name="sequence">10</field>
+</record>
+
+<record id="group_ebm_management_all" model="res.groups">
+    <field name="name">Manager</field>
+      <field name="category_id" ref="module_ebm_management"/>
+</record>
+ <record id="ebm_management_access" model="ir.rule">
+
+        <field name="name">Manager rule</field>
+
+        <field name="model_id" ref="model_ebm_management"/>
+
+        <field name="groups" eval="[(4, ref('group_ebm_management_all'))]"/>
+
+        <field name="perm_read" eval="1"/>
+
+        <field name="perm_write" eval="1"/>
+
+        <field name="perm_create" eval="1"/>
+
+        <field name="perm_unlink" eval="1"/>
+
+<!--        <field name="domain_force">[('state','=','audit')]</field>-->
+
+    </record>
+
+
+
+</data>
+</odoo>

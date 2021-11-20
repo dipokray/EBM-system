@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="report_EBM_details" model="ir.actions.report">
+            <field name="name">Report EBM Details</field>
+            <field name="model">ebm.management</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">Employee_Expense_Management.report_EBM_details_id</field>
+            <field name="report_file">Employee_Expense_Management.report_EBM_details_id</field>
+            <field name="binding_model_id" ref="model_ebm_management"/>
+            <field name="binding_type">report</field>
+        </record>
+    <record id="report_pre_costing_details" model="ir.actions.report">
+            <field name="name">Report Pre-costing Details</field>
+            <field name="model">ebm.management</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">Employee_Expense_Management.report_pre_costing_details_id</field>
+            <field name="report_file">Employee_Expense_Management.report_pre_costing_details_id</field>
+            <field name="binding_model_id" ref="model_ebm_management"/>
+            <field name="binding_type">report</field>
+        </record>
+    <record id="report_bill_details" model="ir.actions.report">
+            <field name="name">Report Bill Details</field>
+            <field name="model">ebm.management</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">Employee_Expense_Management.report_bill_details_id</field>
+            <field name="report_file">Employee_Expense_Management.report_bill_details_id</field>
+            <field name="binding_model_id" ref="model_ebm_management"/>
+            <field name="binding_type">report</field>
+        </record>
+    <record id="report_bill_summary" model="ir.actions.report">
+            <field name="name">Report Bill Summary</field>
+            <field name="model">ebm.management</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">Employee_Expense_Management.report_bill_summary_id</field>
+            <field name="report_file">Employee_Expense_Management.report_bill_summary_id</field>
+            <field name="binding_model_id" ref="model_ebm_management"/>
+            <field name="binding_type">report</field>
+        </record>
+
+</odoo>

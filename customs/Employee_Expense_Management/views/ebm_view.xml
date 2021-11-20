@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_ebm_management" model="ir.actions.act_window">
+        <field name="name">EBM</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ebm.management</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your New EBM Record !!!
+            </p>
+        </field>
+    </record>
+
+    <!-- from view -->
+
+    <record id="view_ebm_form" model="ir.ui.view">
+        <field name="name">ebm.management.form</field>
+        <field name="model">ebm.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button id="button_department" name="action_department" string="Department Manager Approve"
+                            class="btn-primary"
+                            states="draft" type="object"/>
+                    <button id="button_audit" name="action_audit" string="Audit Approve" class="btn-primary"
+                            states="department manager" type="object"/>
+                    <button id="button_account" name="action_account" string="Account Approve" class="btn-primary"
+                            states="audit" type="object"/>
+                    <button id="button_draft" name="action_draft" string="Set To Draft" class="btn-primary"
+                            states="management" type="object"/>
+                    <button id="button_management" name="action_management" string="Management Approve"
+                            class="btn-primary"
+                            states="account" type="object"/>
+                    <button id="button_create_iou" name="%(Employee_Expense_Management.action_create_iou)d"
+                            string="Create IOU" class="btn-primary" type="action"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,department manager,audit,account,management"/>
+                </header>
+                <sheet>
+                    <!--  For Sequence Id-->
+                    <div class="oe_title">
+                        <h3>
+                            <field name="ebm_sequence" readonly="1"/>
+                        </h3>
+                    </div>
+                    <!--   End    -->
+                    <group>
+                        <group>
+                            <field name="user" readonly="1"/>
+                            <field name="dept" readonly="1"/>
+                            <field name="employee_id"/>
+                            <field name="expense_dept"/>
+                        </group>
+                        <group>
+                            <field name="ebm_date"/>
+                            <field name="required_date"/>
+                            <field name="purpose"/>
+                        </group>
+                    </group>
+
+
+                    <!-- Bottom part in Notebook -->
+                    <h3>Pre-costing</h3>
+                    <notebook>
+                        <page string="Entertainment" name="entertainment_PreCosting">
+                            <field name="entertainment_pre_costing_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="amount" optional="show"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Conveyance" name="conveyance_PreCosting">
+                            <field name="conveyance_pre_costing_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="amount" optional="show"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Miscellaneous" name="miscellaneous_PreCosting">
+                            <field name="miscellaneous_pre_costing_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="amount" optional="show"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                    </notebook>
+                    <group class="oe_subtotal_footer">
+                        <field name="entertainment_pre_costing_total"/>
+                        <field name="conveyance_pre_costing_total"/>
+                        <field name="miscellaneous_pre_costing_total"/>
+                        <field name="total_pre_costing_amount" class="oe_subtotal_footer_separator"/>
+                    </group>
+
+                    <h3>Billing</h3>
+                    <notebook>
+                        <page string="Entertainment" name="entertainment_expense">
+                            <field name="entertainment_expense_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="req_qty" optional="show"/>
+                                    <field name="unit_cost" optional="show"/>
+                                    <field name="payment_date" optional="show"/>
+                                    <field name="entertainment_bill_amount" optional="show"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id"/>
+                                            </group>
+                                            <group>
+                                                <field name="req_qty"/>
+                                            </group>
+                                            <group>
+                                                <field name="unit_cost"/>
+                                            </group>
+                                            <group>
+                                                <field name="payment_date"/>
+                                            </group>
+                                            <group>
+                                                <field name="entertainment_bill_amount"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Conveyance" name="conveyance_expense">
+                            <field name="conveyance_expense_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="con_from" optional="show"/>
+                                    <field name="con_to" optional="show"/>
+                                    <field name="payment_date" optional="show"/>
+                                    <field name="conveyance_bill_amount" optional="show"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="product_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="con_from"/>
+                                        </group>
+                                        <group>
+                                            <field name="con_to"/>
+                                        </group>
+                                        <group>
+                                            <field name="payment_date"/>
+                                        </group>
+                                        <group>
+                                            <field name="conveyance_bill_amount"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Miscellaneous" name="miscellaneous_expenses">
+                            <field name="miscellaneous_expense_line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="name" optional="show"/>
+                                    <field name="dept" optional="show"/>
+                                    <field name="designation" optional="show"/>
+                                    <field name="dist" optional="show"/>
+                                    <field name="phone" optional="show"/>
+                                    <field name="payment_date" optional="show"/>
+                                    <field name="work_place" optional="show"/>
+                                    <field name="miscellaneous_bill_amount" optional="show"/>
+                                    <field name="purpose" optional="show"/>
+                                    <field name="remark" optional="show"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="product_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="name"/>
+                                        </group>
+                                        <group>
+                                            <field name="dept"/>
+                                        </group>
+                                        <group>
+                                            <field name="designation"/>
+                                        </group>
+                                        <group>
+                                            <field name="dist"/>
+                                        </group>
+                                        <group>
+                                            <field name="phone"/>
+                                        </group>
+                                        <group>
+                                            <field name="payment_date"/>
+                                        </group>
+                                        <group>
+                                            <field name="work_place"/>
+                                        </group>
+                                        <group>
+                                            <field name="miscellaneous_bill_amount"/>
+                                        </group>
+                                        <group>
+                                            <field name="purpose"/>
+                                        </group>
+                                        <group>
+                                            <field name="remark"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                    </notebook>
+
+                    <!--Notebook End-->
+                    <group class="oe_subtotal_footer">
+                        <field name="entertainment_total"/>
+                        <field name="conveyance_total"/>
+                        <field name="miscellaneous_total"/>
+                        <field name="total_billing_amount" class="oe_subtotal_footer_separator"/>
+                        <field name="due_amount"/>
+                        <field name="excess_amount"/>
+
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view-->
+
+    <record id="view_ebm_tree" model="ir.ui.view">
+        <field name="name">ebm.management.tree</field>
+        <field name="model">ebm.management</field>
+        <field name="arch" type="xml">
+            <tree sample="1" multi_edit="1">
+                <field name="ebm_sequence"/>
+                <field name="user" optional="show"/>
+                <field name="dept" optional="show"/>
+                <field name="employee_id" optional="show"/>
+                <field name="expense_dept" optional="show"/>
+                <field name="ebm_date" optional="show"/>
+                <field name="required_date" optional="show"/>
+                <field name="purpose" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem id="menu_EBM_management_root"
+              name="EBM System"
+              web_icon="Employee_Expense_Management,static/description/icon.png"
+              sequence="2"/>
+
+    <menuitem id="menu_EBM_root"
+              name="EBM"
+              parent="menu_EBM_management_root"
+              sequence="10"/>
+    <menuitem id="menu_EBM"
+              name="EBM Details"
+              parent="menu_EBM_root"
+              action="action_ebm_management"
+              sequence="20"/>
+</odoo>

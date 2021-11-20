@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+                       <!--Iou sequence-->
+        <record id="seq_iou" model="ir.sequence">
+            <field name="name">EBM Sequence</field>
+            <field name="code">ebm.management</field><!--code_by_next-->
+            <field name="prefix">EBM-</field>
+            <field name="padding">2</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+
+</odoo>

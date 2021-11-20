@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ebm_management,access.ebm.management,model_ebm_management,,1,1,1,1
+access_create_iou_wizard,access.create.iou.wizard,model_create_iou_wizard,,1,1,1,1
+access_conveyance_expense_lines,access.conveyance.expense_lines,model_conveyance_expense_lines,,1,1,1,1
+access_miscellaneous_expense_lines,access.miscellaneous.expense.ines,model_miscellaneous_expense_lines,,1,1,1,1
+access_ebm_product,access.ebm.product,model_ebm_product,,1,1,1,1
+access_entertainment_expense_lines,access.entertainment.expense.lines,model_entertainment_expense_lines,,1,1,1,1
+access_entertainment_pre_costing_lines,Access.entertainment.pre_costing.lines,model_entertainment_pre_costing_lines,,1,1,1,1
+access_conveyance.pre_costing_lines,Access.conveyance.pre_costing.lines,model_conveyance_pre_costing_lines,,1,1,1,1
+access_miscellaneous_pre_costing_lines,Access.miscellaneous.pre_costing.lines,model_miscellaneous_pre_costing_lines,,1,1,1,1

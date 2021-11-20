@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <template id="report_pre_costing_details_id">
+        <t t-foreach="docs" t-as="o">
+            <div t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 14px !important;">
+                        <div class="oe_structure"/>
+                        <div class="text-center">
+
+                        </div>
+                        <h2>EBM NO : #
+                            <span t-field="o.ebm_sequence"/>
+                        </h2>
+                        <br/>
+                        <div class="row ">
+                            <div class="col-8">
+                                <h6>
+                                    <b>Creator :</b>
+                                    <span t-field="o.user"/>
+                                </h6>
+                                <h6>
+                                    <b>Department :</b>
+                                    <span t-field="o.dept"/>
+                                </h6>
+                                <h6>
+                                    <b>Create Date :</b>
+                                    <span t-field="o.ebm_date"/>
+                                </h6>
+                            </div>
+                            <div class="col-4 text-left" style="padding-left:58px;">
+                                <h6>
+                                    <b>Employee :</b>
+                                    <span t-field="o.employee_id"/>
+                                </h6>
+                                <h6>
+                                    <b>Department :</b>
+                                    <span t-field="o.expense_dept"/>
+                                </h6>
+                            </div>
+                        </div>
+                        <hr class="hr-sm mb-0"/>
+                        <br/>
+                        <br/>
+                        <div class="row ">
+                            <div class="col-6">
+                                <h3>Pre-Costing</h3>
+                            </div>
+                            <div class="col-6 text-left" style="padding-left:58px;">
+                                <h5>
+                                    <b>Total Pre-Costing Amount :</b>
+                                    <span t-field="o.total_pre_costing_amount"/>
+                                </h5>
+                            </div>
+                        </div>
+                        <hr class="hr-sm mb-0"/>
+                        <t t-if="o.entertainment_pre_costing_line_ids">
+                            <h4>Entertainment :</h4>
+                            <table class="table table-sm o_main_table" name="Entertainment">
+                                <thead>
+                                    <tr>
+                                        <th name="th_product_id" class="text-left">
+                                            <span>Product Name</span>
+                                        </th>
+                                        <th name="th_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.entertainment_pre_costing_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.amount"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+
+                            </table>
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-3">
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_subtotal_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.entertainment_pre_costing_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+
+                        <t t-if="o.conveyance_pre_costing_line_ids">
+                            <h4>Conveyance :</h4>
+                            <table class="table table-sm o_main_table" name="Conveyance">
+                                <thead>
+                                    <tr>
+                                        <th name="th_product_id" class="text-left">
+                                            <span>Product Name</span>
+                                        </th>
+                                        <th name="th_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.conveyance_pre_costing_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.amount"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+
+                            </table>
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-3">
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_total_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.conveyance_pre_costing_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="o.miscellaneous_pre_costing_line_ids">
+                            <h4>Miscellaneous :</h4>
+                            <table class="table table-sm o_main_table" name="Conveyance">
+                                <thead>
+                                    <tr>
+                                        <th name="th_product_id" class="text-left">
+                                            <span>Product Name</span>
+                                        </th>
+                                        <th name="th_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.miscellaneous_pre_costing_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.amount"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+
+                            </table>
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-3">
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_total_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.miscellaneous_pre_costing_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </div>
+        </t>
+     </template>
+
+</odoo>
