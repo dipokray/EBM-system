@@ -28,7 +28,7 @@
             <field name="binding_type">report</field>
         </record>
     <record id="report_bill_summary" model="ir.actions.report">
-            <field name="name">Report Bill Summary</field>
+            <field name="name">Pre-Costing &amp; Bill Summary</field>
             <field name="model">ebm.management</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">Employee_Expense_Management.report_bill_summary_id</field>

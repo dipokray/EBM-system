@@ -36,16 +36,19 @@
                                     <b>Department :</b>
                                     <span t-field="o.expense_dept"/>
                                 </h6>
+                                <h6>
+                                    <b>Purpose :</b>
+                                    <span t-field="o.purpose"/>
+                                </h6>
                             </div>
                         </div>
                         <hr class="hr-sm mb-0"/>
                         <br/>
-                        <br/>
-                        <div class="row ">
+                        <div class="row">
                             <div class="col-6">
                                 <h3>Pre-Costing</h3>
                             </div>
-                            <div class="col-6 text-left" style="padding-left:70px;">
+                            <div class="col-6" style="padding-left:70px;">
                                 <h5>
                                     <b>Total Pre-Costing Amount :</b>
                                     <span t-field="o.total_pre_costing_amount"/>
@@ -64,6 +67,9 @@
                                         <th name="th_amount" class="text-left">
                                             <span>Amount</span>
                                         </th>
+                                        <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,6 +80,9 @@
                                             </td>
                                             <td>
                                                 <span t-field="line.amount"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.remark"/>
                                             </td>
                                         </tr>
                                     </t>
@@ -107,6 +116,9 @@
                                         <th name="th_amount" class="text-left">
                                             <span>Amount</span>
                                         </th>
+                                        <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -117,6 +129,9 @@
                                             </td>
                                             <td>
                                                 <span t-field="line.amount"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.remark"/>
                                             </td>
                                         </tr>
                                     </t>
@@ -149,6 +164,9 @@
                                         <th name="th_amount" class="text-left">
                                             <span>Amount</span>
                                         </th>
+                                        <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -159,6 +177,9 @@
                                             </td>
                                             <td>
                                                 <span t-field="line.amount"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.remark"/>
                                             </td>
                                         </tr>
                                     </t>
@@ -180,15 +201,58 @@
                                 </div>
                             </div>
                         </t>
+                           <t t-if="o.purchase_pre_costing_line_ids">
+                            <h4>Purchase :</h4>
+                            <table class="table table-sm o_main_table" name="Purchase">
+                                <thead>
+                                    <tr>
+                                        <th name="th_purchase_ref_no" class="text-left">
+                                            <span>Purchase Ref. No</span>
+                                        </th>
+                                        <th name="th_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                         <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.purchase_pre_costing_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.purchase_ref_no"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.amount"/>
+                                            </td>
+                                             <td>
+                                                <span t-field="line.remark"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+
+                            </table>
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-3">
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_total_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.purchase_pre_costing_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+<!--                        <h4>Pre-costing Approver :</h4>-->
+<!--                            <span t-field="o.confirm_pre_costing" style="color:Dim Gray;"/>-->
 
                         <hr class="hr-sm mb-0"/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                        <br/>
-                    <br/>
                         <br/>
                         <div class="row ">
                             <div class="col-6">
@@ -216,11 +280,14 @@
                                         <th name="th_unit_cost" class="text-left">
                                             <span>Unit Cost</span>
                                         </th>
-                                         <th name="th_payment_date" class="text-left">
+                                        <th name="th_payment_date" class="text-left">
                                             <span>Payment Date</span>
                                         </th>
                                         <th name="th_entertainment_bill_amount" class="text-left">
                                             <span>Amount</span>
+                                        </th>
+                                         <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
                                         </th>
                                     </tr>
                                 </thead>
@@ -236,11 +303,14 @@
                                             <td>
                                                 <span t-field="line.unit_cost"/>
                                             </td>
-                                             <td>
+                                            <td>
                                                 <span t-field="line.payment_date"/>
                                             </td>
                                             <td>
                                                 <span t-field="line.entertainment_bill_amount"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.remark"/>
                                             </td>
                                         </tr>
                                     </t>
@@ -277,11 +347,14 @@
                                         <th name="th_con_to" class="text-left">
                                             <span>To</span>
                                         </th>
-                                         <th name="th_payment_date" class="text-left">
+                                        <th name="th_payment_date" class="text-left">
                                             <span>Payment Date</span>
                                         </th>
                                         <th name="th_amount" class="text-left">
                                             <span>Amount</span>
+                                        </th>
+                                        <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
                                         </th>
                                     </tr>
                                 </thead>
@@ -302,6 +375,9 @@
                                             </td>
                                             <td>
                                                 <span t-field="line.conveyance_bill_amount"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.remark"/>
                                             </td>
                                         </tr>
                                     </t>
@@ -358,6 +434,9 @@
                                         <th name="th_miscellaneous_bill_amount" class="text-left">
                                             <span>Amount</span>
                                         </th>
+                                        <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -393,6 +472,9 @@
                                             <td>
                                                 <span t-field="line.miscellaneous_bill_amount"/>
                                             </td>
+                                             <td>
+                                                <span t-field="line.remark"/>
+                                            </td>
                                         </tr>
                                     </t>
                                 </tbody>
@@ -416,29 +498,78 @@
                         </div>
 
                     </div>
+                     <t t-if="o.purchase_expense_line_ids">
+                            <h4>Purchase :</h4>
+                            <table class="table table-sm o_main_table" name="Purchase">
+                                <thead>
+                                    <tr>
+                                        <th name="th_purchase_ref_no" class="text-left">
+                                            <span>Purchase Ref. No</span>
+                                        </th>
+                                        <th name="th_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                         <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.purchase_expense_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.purchase_ref_no"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.amount"/>
+                                            </td>
+                                             <td>
+                                                <span t-field="line.remark"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                          </table>
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-3">
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_total_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.purchase_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                     </t>
+<!--                     <h4>Bill Approver :</h4>-->
+<!--                            <span t-field="o.confirm_bill" style="color:Dim Gray;"/>-->
                     <br/>
                     <br/>
                     <div class="row table table-bordered"
-                         style="border-color:575656; padding-bottom:10px; padding-top:10px;">
+                         style="border-color:black; padding-bottom:10px; padding-top:10px;">
                         <div class="col-6">
                             <h5>
-                            <b>Unutilized Amount :</b>
-                            <span t-field="o.due_amount"/>
-                        </h5>
-                        <h5>
-                            <b>Excess Bill Amount :</b>
-                            <span t-field="o.excess_amount"/>
-                        </h5>
+                                <b>Unutilized Amount :</b>
+                                <span t-field="o.due_amount"/>
+                            </h5>
+                            <h5>
+                                <b>Excess Bill Amount :</b>
+                                <span t-field="o.excess_amount"/>
+                            </h5>
                         </div>
                         <div class="col-6">
                             <h5>
-                            <b>Total Pre-costing Amount :</b>
-                            <span t-field="o.total_pre_costing_amount"/>
-                        </h5>
-                        <h5>
-                            <b>Total Bill Amount :</b>
-                            <span t-field="o.total_billing_amount"/>
-                        </h5>
+                                <b>Total Pre-costing Amount :</b>
+                                <span t-field="o.total_pre_costing_amount"/>
+                            </h5>
+                            <h5>
+                                <b>Total Bill Amount :</b>
+                                <span t-field="o.total_billing_amount"/>
+                            </h5>
                         </div>
                     </div>
                     <br/>
@@ -446,17 +577,19 @@
 
                     <div class="row mb32 text-left" style="margin-top: 10mm;">
                         <div class="col-4 text-left">
-                             <strong>-----------------</strong>
+                            <strong>-----------------</strong>
                             <br/>
                             <strong class="text-center">Prepared By</strong>
 
                         </div>
                         <div class="col-4 text-center">
-                            <strong>------------------</strong><br/>
+                            <strong>------------------</strong>
+                            <br/>
                             <strong class="text-center">Checked By</strong>
                         </div>
                         <div class="col-4 text-right">
-                            <strong>------------------</strong><br/>
+                            <strong>------------------</strong>
+                            <br/>
                             <strong class="text-center">Authorized By</strong>
                         </div>
 

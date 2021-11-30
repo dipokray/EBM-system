@@ -20,22 +20,46 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button id="button_department" name="action_department" string="Department Manager Approve"
+                    <button id="button_confirm_pre_cost" name="action_confirm_pre_costing" string="Confirm"
                             class="btn-primary"
                             states="draft" type="object"/>
-                    <button id="button_audit" name="action_audit" string="Audit Approve" class="btn-primary"
-                            states="department manager" type="object"/>
-                    <button id="button_account" name="action_account" string="Account Approve" class="btn-primary"
-                            states="audit" type="object"/>
-                    <button id="button_draft" name="action_draft" string="Set To Draft" class="btn-primary"
-                            states="management" type="object"/>
-                    <button id="button_management" name="action_management" string="Management Approve"
+                    <!--                    <button id="button_department" name="action_department" string="Department Manager Approve"-->
+                    <!--                            class="btn-primary"-->
+                    <!--                            states="confirm" type="object"/>-->
+                    <!--                    <button id="button_audit" name="action_audit" string="Audit Approve" class="btn-primary"-->
+                    <!--                            states="department manager" type="object"/>-->
+                    <!--                    <button id="button_account" name="action_account" string="Account Approve" class="btn-primary"-->
+                    <!--                            states="audit" type="object"/>-->
+                    <!--                    <button id="button_management" name="action_management" string="Management Approved" class="btn-primary"-->
+                    <!--                            states="account" type="object"/>-->
+                    <!--                    <button id="button_draft" name="action_draft" string="Set To Draft" class="btn-primary"-->
+                    <!--                            states="account" type="object"/>-->
+                    <!--                    <button id="button_draft_bill" name="action_draft_bill" string="Draft Bill"-->
+                    <!--                            class="btn-primary"-->
+                    <!--                            states="management" type="object"/>-->
+                    <button id="button_confirm_pre_cost" name="action_confirm_bill" string="Confirm Bill"
                             class="btn-primary"
-                            states="account" type="object"/>
+                            states="confirm" type="object"/>
+                    <!--                    <button id="button_department" name="action_department_bill_conf"-->
+                    <!--                            string="Department Manager Approve"-->
+                    <!--                            class="btn-primary"-->
+                    <!--                            states="confirm bill" type="object"/>-->
+                    <!--                    <button id="button_audit_bill" name="action_audit_bill_conf" string="Audit Approve"-->
+                    <!--                            class="btn-primary"-->
+                    <!--                            states="department manager bill" type="object"/>-->
+                    <!--                    <button id="button_account_bill" name="action_account_bill_conf" string="Account Approve"-->
+                    <!--                            class="btn-primary"-->
+                    <!--                            states="audit bill" type="object"/>-->
+                    <!--                    <button id="button_management_bill" name="action_management_bill_conf" string="Management Approved"-->
+                    <!--                            class="btn-primary"-->
+                    <!--                            states="account bill" type="object"/>-->
+                    <!--                    <button id="button_draft_bill" name="action_draft_bill" string="Set As Draft"-->
+                    <!--                            class="btn-primary"-->
+                    <!--                            states="account bill" type="object"/>-->
                     <button id="button_create_iou" name="%(Employee_Expense_Management.action_create_iou)d"
-                            string="Create IOU" class="btn-primary" type="action"/>
+                            string="Create IOU" class="btn-primary" states="management" type="action"/>
                     <field name="state" widget="statusbar"
-                           statusbar_visible="draft,department manager,audit,account,management"/>
+                           statusbar_visible="draft,confirm,confirm bill"/>
                 </header>
                 <sheet>
                     <!--  For Sequence Id-->
@@ -54,151 +78,259 @@
                         </group>
                         <group>
                             <field name="ebm_date"/>
-                            <field name="required_date"/>
-                            <field name="purpose"/>
+                            <field name="required_date" placeholder="Enter the needed expense date"/>
+                            <field name="purpose" placeholder="Purpose of Expense"/>
                         </group>
+
                     </group>
+
+                 <group>
+                     <field name="purchase" eval="False" class="oe-inline" />
+                    <field name="miscellaneous" eval="False" class="oe-inline" />
+                 </group>
+
+
+
+
+
+
+
 
 
                     <!-- Bottom part in Notebook -->
                     <h3>Pre-costing</h3>
                     <notebook>
                         <page string="Entertainment" name="entertainment_PreCosting">
-                            <field name="entertainment_pre_costing_line_ids">
+                            <field name="entertainment_pre_costing_line_ids"
+                                   attrs="{'readonly':['|',('state','=','confirm'),('state','=','confirm bill')]}">
                                 <tree editable="bottom">
-                                    <field name="product_id"/>
-                                    <field name="amount" optional="show"/>
+                                    <field name="product_id" placeholder="Product name"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
                                 </tree>
                                 <form>
                                     <group>
                                         <group>
                                             <group>
-                                                <field name="product_id"/>
+                                                <field name="product_id" placeholder="Product name"/>
                                             </group>
                                             <group>
-                                                <field name="amount"/>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
                                             </group>
                                         </group>
                                     </group>
                                 </form>
                             </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="entertainment_pre_costing_total" class="oe_subtotal_footer_separator"/>
+                            </group>
                         </page>
                         <page string="Conveyance" name="conveyance_PreCosting">
-                            <field name="conveyance_pre_costing_line_ids">
+                            <field name="conveyance_pre_costing_line_ids"
+                                   attrs="{'readonly':['|',('state','=','confirm'),('state','=','confirm bill')]}">
                                 <tree editable="bottom">
-                                    <field name="product_id"/>
-                                    <field name="amount" optional="show"/>
+                                    <field name="product_id" placeholder="Product name"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
                                 </tree>
                                 <form>
                                     <group>
                                         <group>
                                             <group>
-                                                <field name="product_id"/>
+                                                <field name="product_id" placeholder="Product name"/>
                                             </group>
                                             <group>
-                                                <field name="amount"/>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
                                             </group>
                                         </group>
                                     </group>
                                 </form>
                             </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="conveyance_pre_costing_total" class="oe_subtotal_footer_separator"/>
+                            </group>
                         </page>
-                        <page string="Miscellaneous" name="miscellaneous_PreCosting">
-                            <field name="miscellaneous_pre_costing_line_ids">
+                        <page string="Miscellaneous" name="miscellaneous_PreCosting" attrs="{'invisible': [('miscellaneous', '=', False)]}">
+                            <field name="miscellaneous_pre_costing_line_ids"
+                                   attrs="{'readonly':['|',('state','=','confirm'),('state','=','confirm bill')]}">
                                 <tree editable="bottom">
-                                    <field name="product_id"/>
-                                    <field name="amount" optional="show"/>
+                                    <field name="product_id" placeholder="Product Name"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
                                 </tree>
                                 <form>
                                     <group>
                                         <group>
                                             <group>
-                                                <field name="product_id"/>
+                                                <field name="product_id" placeholder="Product Name"/>
                                             </group>
                                             <group>
-                                                <field name="amount"/>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
                                             </group>
                                         </group>
                                     </group>
                                 </form>
                             </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="miscellaneous_pre_costing_total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+
+                        <page string="Purchase" name="Purchase_PreCosting"
+                              attrs="{'invisible': [('purchase',  '=', False)]}">
+                            <field name="purchase_pre_costing_line_ids"
+                                   attrs="{'readonly':['|',('state','=','confirm'),('state','=','confirm bill')]}">
+                                <tree editable="bottom">
+                                    <field name="purchase_ref_no" placeholder="Purchase ref. No"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="purchase_ref_no" placeholder="Purchase ref. No"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="purchase_pre_costing_total" />
+                            </group>
                         </page>
 
                     </notebook>
-                    <group class="oe_subtotal_footer">
-                        <field name="entertainment_pre_costing_total"/>
-                        <field name="conveyance_pre_costing_total"/>
-                        <field name="miscellaneous_pre_costing_total"/>
-                        <field name="total_pre_costing_amount" class="oe_subtotal_footer_separator"/>
+                    <br/>
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="total_pre_costing_amount"/>
                     </group>
+                    <h3>Pre-Costing Approver Details:</h3>
+                    <field name="confirm_pre_costing" style="color: Dim Gray;"/>
 
+                    <!--                    <group>-->
+                    <!--                        <field name="total_pre_costing_amount"/>-->
+                    <!--                    </group>-->
+
+                    <br/>
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col-8">-->
+                    <!--                            <h3>Pre-Costing Approver Details:</h3>-->
+                    <!--                    <field name="confirm_pre_costing" style="color: Dim Gray;"/>-->
+                    <!--                        </div>-->
+                    <!--                     <div class="col-4 text-left" style="padding-left:200px;">-->
+                    <!--                             <group class="oe_subtotal_footer oe_right">-->
+                    <!--                        <field name="total_pre_costing_amount" class="oe_subtotal_footer_separator"/>-->
+                    <!--                    </group>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
                     <h3>Billing</h3>
                     <notebook>
                         <page string="Entertainment" name="entertainment_expense">
-                            <field name="entertainment_expense_line_ids">
+                            <field name="entertainment_expense_line_ids"
+                                   attrs="{'readonly':[('state','=','confirm bill')]}">
                                 <tree editable="bottom">
-                                    <field name="product_id"/>
-                                    <field name="req_qty" optional="show"/>
-                                    <field name="unit_cost" optional="show"/>
-                                    <field name="payment_date" optional="show"/>
-                                    <field name="entertainment_bill_amount" optional="show"/>
+                                    <field name="product_id" placeholder="Product name"/>
+                                    <field name="req_qty" optional="show" placeholder="Quantity"/>
+                                    <field name="unit_cost" optional="show" placeholder="Cost of product"/>
+                                    <field name="payment_date" optional="show" placeholder="Payment date"/>
+                                    <field name="entertainment_bill_amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
                                 </tree>
                                 <form>
                                     <group>
                                         <group>
                                             <group>
-                                                <field name="product_id"/>
+                                                <field name="product_id" placeholder="Product name"/>
                                             </group>
                                             <group>
-                                                <field name="req_qty"/>
+                                                <field name="req_qty" placeholder="Quantity"/>
                                             </group>
                                             <group>
-                                                <field name="unit_cost"/>
+                                                <field name="unit_cost" placeholder="Cost of product"/>
                                             </group>
                                             <group>
-                                                <field name="payment_date"/>
+                                                <field name="payment_date" placeholder="Payment date"/>
                                             </group>
                                             <group>
-                                                <field name="entertainment_bill_amount"/>
+                                                <field name="entertainment_bill_amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
                                             </group>
                                         </group>
                                     </group>
                                 </form>
                             </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="entertainment_total" class="oe_subtotal_footer_separator"/>
+                            </group>
                         </page>
 
                         <page string="Conveyance" name="conveyance_expense">
-                            <field name="conveyance_expense_line_ids">
+                            <field name="conveyance_expense_line_ids"
+                                   attrs="{'readonly':[('state','=','confirm bill')]}">
                                 <tree editable="bottom">
-                                    <field name="product_id"/>
-                                    <field name="con_from" optional="show"/>
-                                    <field name="con_to" optional="show"/>
-                                    <field name="payment_date" optional="show"/>
-                                    <field name="conveyance_bill_amount" optional="show"/>
+                                    <field name="product_id" placeholder="Product name"/>
+                                    <field name="con_from" optional="show" placeholder="Start From"/>
+                                    <field name="con_to" optional="show" placeholder="Destination"/>
+                                    <field name="payment_date" optional="show" placeholder="Payment Date"/>
+                                    <field name="conveyance_bill_amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
                                 </tree>
                                 <form>
                                     <group>
                                         <group>
-                                            <field name="product_id"/>
+                                            <field name="product_id" placeholder="Product name"/>
                                         </group>
                                         <group>
-                                            <field name="con_from"/>
+                                            <field name="con_from" placeholder="Start From"/>
                                         </group>
                                         <group>
-                                            <field name="con_to"/>
+                                            <field name="con_to" laceholder="Destination"/>
                                         </group>
                                         <group>
-                                            <field name="payment_date"/>
+                                            <field name="payment_date" placeholder="Payment Date"/>
                                         </group>
                                         <group>
-                                            <field name="conveyance_bill_amount"/>
+                                            <field name="conveyance_bill_amount" placeholder="Amount"/>
+                                        </group>
+                                        <group>
+                                            <field name="remark" placeholder="Remarks"/>
                                         </group>
                                     </group>
                                 </form>
                             </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="conveyance_total" class="oe_subtotal_footer_separator"/>
+                            </group>
                         </page>
-                        <page string="Miscellaneous" name="miscellaneous_expenses">
-                            <field name="miscellaneous_expense_line_ids">
+                        <page string="Miscellaneous" name="miscellaneous_expenses"  attrs="{'invisible': [('miscellaneous', '=', False)]}">
+                            <field name="miscellaneous_expense_line_ids"
+                                   attrs="{'readonly':[('state','=','confirm bill')]}">
                                 <tree editable="bottom">
                                     <field name="product_id"/>
                                     <field name="name" optional="show"/>
@@ -250,20 +382,60 @@
                                     </group>
                                 </form>
                             </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="miscellaneous_total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                        <page string="Purchase" name="Purchase_expanse"
+                              attrs="{'invisible': [('purchase',  '=', False)]}">
+                            <field name="purchase_expense_line_ids"
+                                   attrs="{'readonly':[('state','=','confirm bill')]}">
+                                <tree editable="bottom">
+                                    <field name="purchase_ref_no" placeholder="Purchase ref. No"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="purchase_ref_no" placeholder="Purchase ref. No"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="purchase_total" class="oe_subtotal_footer_separator"/>
+                            </group>
                         </page>
 
                     </notebook>
-
+<br/>
                     <!--Notebook End-->
-                    <group class="oe_subtotal_footer">
-                        <field name="entertainment_total"/>
-                        <field name="conveyance_total"/>
-                        <field name="miscellaneous_total"/>
+                    <group class="oe_subtotal_footer" style="font-size: 14px !important;">
                         <field name="total_billing_amount" class="oe_subtotal_footer_separator"/>
                         <field name="due_amount"/>
                         <field name="excess_amount"/>
-
                     </group>
+
+                    <h3>Bill Approver Details :</h3>
+                    <field name="confirm_bill" style="color: Dim Gray;"/>
+
+                    <!--                    <field name="department_approve" style="color: chocolate;"/>-->
+                    <!--                    <br/>-->
+                    <!--                    <field name="audit_approve" style="color: Purple;"/>-->
+                    <!--                    <br/>-->
+                    <!--                    <field name="account_approve" style="color: Maroon;"/>-->
+                    <!--                    <br/>-->
+
+
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids"/>

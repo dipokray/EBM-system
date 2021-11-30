@@ -37,6 +37,10 @@
                                     <b>Department :</b>
                                     <span t-field="o.expense_dept"/>
                                 </h6>
+                                <h6>
+                                    <b>Purpose :</b>
+                                    <span t-field="o.purpose"/>
+                                </h6>
                             </div>
                         </div>
                         <hr class="hr-sm mb-0"/>
@@ -181,6 +185,56 @@
                                 </div>
                             </div>
                         </t>
+                         <t t-if="o.purchase_pre_costing_line_ids">
+                            <h4>Purchase :</h4>
+                            <table class="table table-sm o_main_table" name="Purchase">
+                                <thead>
+                                    <tr>
+                                        <th name="th_purchase_ref_no" class="text-left">
+                                            <span>Purchase Ref. No</span>
+                                        </th>
+                                        <th name="th_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                         <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.purchase_pre_costing_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.purchase_ref_no"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.amount"/>
+                                            </td>
+                                             <td>
+                                                <span t-field="line.remark"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+
+                            </table>
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-3">
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_total_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.purchase_pre_costing_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+<!--                            <h4>Pre-costing Approver :</h4>-->
+<!--                            <span t-field="o.confirm_pre_costing" style="color:Dim Gray;"/>-->
                     </div>
                 </t>
             </div>

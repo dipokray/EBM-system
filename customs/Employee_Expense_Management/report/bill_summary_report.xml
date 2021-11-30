@@ -4,140 +4,156 @@
         <t t-foreach="docs" t-as="o">
             <div t-call="web.html_container">
                 <t t-call="web.external_layout">
-                <div class="page" style="font-size: 14px !important;">
-                    <div class="oe_structure"/>
-                    <div class="text-center">
-                        <h2>Pre costing &amp; Bill Overall Summary</h2>
-                    </div>
-                    <h2>EBM NO : #
-                        <span t-field="o.ebm_sequence"/>
-                    </h2>
-                    <br/>
-                    <div class="row ">
-                        <div class="col-8">
-                            <h6>
-                                <b>Creator :</b>
-                                <span t-field="o.user"/>
-                            </h6>
-                            <h6>
-                                <b>Department :</b>
-                                <span t-field="o.dept"/>
-                            </h6>
-                            <h6>
-                                <b>Create Date :</b>
-                                <span t-field="o.ebm_date"/>
-                            </h6>
+                    <div class="page" style="font-size: 14px !important;">
+                        <div class="oe_structure"/>
+                        <div class="text-center">
+                            <h2>Pre costing &amp; Bill Overall Summary</h2>
                         </div>
-                        <div class="col-4 text-left" style="padding-left:58px;">
-                            <h6>
-                                <b>Employee :</b>
-                                <span t-field="o.employee_id"/>
-                            </h6>
-                            <h6>
-                                <b>Department :</b>
-                                <span t-field="o.expense_dept"/>
-                            </h6>
+                        <h2>EBM NO : #
+                            <span t-field="o.ebm_sequence"/>
+                        </h2>
+                        <br/>
+                        <div class="row ">
+                            <div class="col-8">
+                                <h6>
+                                    <b>Creator :</b>
+                                    <span t-field="o.user"/>
+                                </h6>
+                                <h6>
+                                    <b>Department :</b>
+                                    <span t-field="o.dept"/>
+                                </h6>
+                                <h6>
+                                    <b>Create Date :</b>
+                                    <span t-field="o.ebm_date"/>
+                                </h6>
+                            </div>
+                            <div class="col-4 text-left" style="padding-left:58px;">
+                                <h6>
+                                    <b>Employee :</b>
+                                    <span t-field="o.employee_id"/>
+                                </h6>
+                                <h6>
+                                    <b>Department :</b>
+                                    <span t-field="o.expense_dept"/>
+                                </h6>
+                                <h6>
+                                    <b>Purpose :</b>
+                                    <span t-field="o.purpose"/>
+                                </h6>
+                            </div>
+                        </div>
+                        <hr class="hr-sm mb-0"/>
+                        <br/>
+                        <br/>
+                        <h4>Pre Costing &amp; Bill Comparative Summary</h4>
+                        <table class="table table-sm o_main_table" name="Bill_Summary">
+                            <thead>
+                                <tr>
+                                    <th name="th_entertainment" class="text-left">
+                                        <span>Category</span>
+                                    </th>
+                                    <th name="th_requested_amount" class="text-left">
+                                        <span>Requested Amount</span>
+                                    </th>
+                                    <th name="th_bill_amount" class="text-left">
+                                        <span>Bill Amount</span>
+                                    </th>
+                                    <th name="th_difference_amount" class="text-left">
+                                        <span>Difference</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        <span>Entertainment</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.entertainment_pre_costing_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.entertainment_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.entertainment_difference" style="color:red;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Conveyance</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.conveyance_pre_costing_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.conveyance_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.conveyance_difference" style="color:red;"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Miscellaneous</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.miscellaneous_pre_costing_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.miscellaneous_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.miscellaneous_difference" style="color:red;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Purchase</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.purchase_pre_costing_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.purchase_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.purchase_difference" style="color:red;"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h4>Pre Costing and Bill Short Summary</h4>
+                        <div class="row table table-bordered"
+                             style="border-color:black; padding-left:50px; padding-bottom:10px; padding-top:10px;">
+                            <div class="col-6">
+                                <h5>
+                                    <b>Pre-Costing Amount :</b>
+                                    <span t-field="o.total_pre_costing_amount"/>
+                                </h5>
+                                <h5>
+                                    <b>Total Bill Amount :</b>
+                                    <span t-field="o.total_billing_amount"/>
+                                </h5>
+
+                            </div>
+                            <div class="col-6">
+                                <h5>
+                                    <b>Unutilized Amount :</b>
+                                    <span t-field="o.due_amount"/>
+                                </h5>
+
+                                <h5>
+                                    <b>Excess Bill Amount :</b>
+                                    <span t-field="o.excess_amount" style="color:red;"/>
+                                </h5>
+                            </div>
                         </div>
                     </div>
-                    <hr class="hr-sm mb-0"/>
-                    <br/>
-                    <br/>
-                    <h4>Pre Costing &amp; Bill Comparative Summary</h4>
-                    <table class="table table-sm o_main_table" name="Bill_Summary">
-                        <thead>
-                            <tr>
-                                <th name="th_entertainment" class="text-left">
-                                    <span>Category</span>
-                                </th>
-                                <th name="th_requested_amount" class="text-left">
-                                    <span>Requested Amount</span>
-                                </th>
-                                <th name="th_bill_amount" class="text-left">
-                                    <span>Bill Amount</span>
-                                </th>
-                                <th name="th_difference_amount" class="text-left">
-                                    <span>Difference</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td>
-                                    <span>Entertainment</span>
-                                </td>
-                                <td>
-                                    <span t-field="o.entertainment_pre_costing_total"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.entertainment_total"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.entertainment_difference"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Conveyance</span>
-                                </td>
-                                <td>
-                                    <span t-field="o.conveyance_pre_costing_total"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.conveyance_total"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.conveyance_difference"/>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span>Miscellaneous</span>
-                                </td>
-                                <td>
-                                    <span t-field="o.miscellaneous_pre_costing_total"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.miscellaneous_total"/>
-                                </td>
-                                <td>
-                                    <span t-field="o.miscellaneous_difference"/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <h4>Pre Costing and Bill Short Summary</h4>
-                    <div class="row table table-bordered"
-                         style="border-color:575656; padding-left:50px; padding-bottom:10px; padding-top:10px;">
-                        <div class="col-6">
-                            <h5>
-                                <b>Pre-Costing Amount :</b>
-                                <span t-field="o.total_pre_costing_amount"/>
-                            </h5>
-                            <h5>
-                                <b>Total Bill Amount :</b>
-                                <span t-field="o.total_billing_amount"/>
-                            </h5>
-
-                        </div>
-                        <div class="col-6">
-                            <h5>
-                                <b>Unutilized Amount :</b>
-                                <span t-field="o.due_amount"/>
-                            </h5>
-
-                        <h5>
-                            <b>Excess Bill Amount :</b>
-                            <span t-field="o.excess_amount"/>
-                        </h5>
-                    </div>
-                </div>
-
-
+                </t>
             </div>
         </t>
-    </div>
-</t>
-        </template>
-        </odoo>
+    </template>
+</odoo>

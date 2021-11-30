@@ -8,3 +8,5 @@ access_entertainment_expense_lines,access.entertainment.expense.lines,model_ente
 access_entertainment_pre_costing_lines,Access.entertainment.pre_costing.lines,model_entertainment_pre_costing_lines,,1,1,1,1
 access_conveyance.pre_costing_lines,Access.conveyance.pre_costing.lines,model_conveyance_pre_costing_lines,,1,1,1,1
 access_miscellaneous_pre_costing_lines,Access.miscellaneous.pre_costing.lines,model_miscellaneous_pre_costing_lines,,1,1,1,1
+access_purchase_pre_costing_lines,Access.purchase.pre_costing.lines,model_purchase_pre_costing_lines,,1,1,1,1
+access_purchase_expense_lines,Access.purchase.expense.lines,model_purchase_expense_lines,,1,1,1,1
