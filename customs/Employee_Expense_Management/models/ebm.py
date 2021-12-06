@@ -226,7 +226,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Confirmed By : " + user_id.name + "; " + "Department : " + emp_id.department_id.name + " at " + str(
                 fields.datetime.now())
             rec.confirm_pre_costing = temp
@@ -237,7 +236,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Approved By : Department Manager :" + " " + user_id.name + "; " + "Department : " + \
                    emp_id.department_id.name + " " + "at" + str(fields.datetime.now())
             rec.department_approve = temp
@@ -248,7 +246,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Approved By : Audit manager : " + user_id.name + "; " + "Department : " + emp_id.department_id.name + " at " + str(
                 fields.datetime.now())
             rec.audit_approve = temp
@@ -259,7 +256,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Approved By : Account manager : " + user_id.name + "; " + "Department : " + \
                    emp_id.department_id.name + " at " + str(
                 fields.datetime.now())
@@ -271,7 +267,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Approved By : Management : " + user_id.name + "; " + "Department : " + emp_id.department_id.name + \
                    " at " + str(
                 fields.datetime.now())
@@ -287,7 +282,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Bill Draft By : " + user_id.name + "; " + "Department : " + emp_id.department_id.name + " " + "at " + str(
                 fields.datetime.now())
             rec.management_approve = temp
@@ -298,7 +292,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Bill Confirmed By : " + user_id.name + "; " + "Department : " + \
                    emp_id.department_id.name + " at " + str(
                 fields.datetime.now())
@@ -310,7 +303,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Approved By : Department manager : " + user_id.name + "; " + "Department : " + \
                    emp_id.department_id.name + \
                    " at " + str(fields.datetime.now())
@@ -322,7 +314,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Bill Approved By : Audit manager : " + user_id.name + "; " + "Department : " + \
                    emp_id.department_id.name + " at " + str(
                 fields.datetime.now())
@@ -334,7 +325,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Bill Approved By : Account manager : " + user_id.name + "; " + "Department : " + \
                    emp_id.department_id.name + " at " + str(
                 fields.datetime.now())
@@ -346,7 +336,6 @@ class EbmManagement(models.Model):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
         for rec in self:
-            temp = ''
             temp = "Bill Approved By : Management : " + user_id.name + "; " + "Department : " + \
                    emp_id.department_id.name + " at " + str(fields.datetime.now())
             rec.management_approve = temp
