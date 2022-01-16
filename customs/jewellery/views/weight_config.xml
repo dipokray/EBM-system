@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_weight_type_tree_view" model="ir.ui.view">
+        <field name="name">weight.tree.view</field>
+        <field name="model">weight.config</field>
+        <field name="arch" type="xml">
+            <tree string="weight">
+                <field name="weight_type"/>
+            </tree>
+        </field>
+    </record>
+
+<!--    <record id="product_weight_type_FORM_view" model="ir.ui.view">-->
+<!--        <field name="name">WEIGHT.form.view</field>-->
+<!--        <field name="model">weight.config</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="weight">-->
+<!--                <sheet>-->
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="weight_type"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </sheet>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+    <record id="product_weight_action" model="ir.actions.act_window">
+        <field name="name">Weight Config</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">weight.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="jewellery_root" name="Jewellery" sequence="1"/>
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="config" name="Config" parent="jewellery_root" sequence="10"/>
+    <menuitem id="weight" name="weight" parent="config" action="product_weight_action"/>
+</odoo>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="order_tree_view" model="ir.ui.view">
+        <field name="name">order.tree.view</field>
+        <field name="model">order.order</field>
+        <field name="arch" type="xml">
+            <tree string="Order">
+                <field name="customer_name"/>
+                <field name="customer_mob"/>
+                <field name="customer_address"/>
+                <field name="product_type"/>
+                <field name="order_date"/>
+                <field name="dele_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="order_form_view" model="ir.ui.view">
+        <field name="name">order.form.view</field>
+        <field name="model">order.order</field>
+        <field name="arch" type="xml">
+            <form string="Order">
+<!--                <button name="%{jewellery.reason}d" type="action" class="oe_highlight" string="Report"/>-->
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="order_seq" widget="readonly"/>
+                        </group>
+                        <group class="oe_subtotal_footer oe_right">
+                                <field name="order_status" widget="boolean"/>
+                        </group>
+                    </group>
+                    <group style="text-align:center" string="Create Order."/>
+
+                    <group>
+                        <group>
+                            <field name="customer_name"  placeholder=" Mr. Arjun" />
+                            <br/>
+                            <field name="customer_mob"/>
+                            <br/>
+                            <field name="customer_address"/>
+                        </group>
+                        <group>
+                            <field name="product_type"/>
+                            <br/>
+                            <field name="order_date"/>
+                            <br/>
+                            <field name="dele_date"/>
+                            <br/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order" name="gold_orderline">
+                            <field name="gold_orderline">
+                                <tree editable="bottom">
+                                    <field name="gold_rate"/>
+                                    <field name="product_name"/>
+<!--                                    <field name="gold_rate_ref"/>-->
+<!--                                    <field name="gold_price_rate"/>-->
+                                    <field name="weight"/>
+                                    <field name="product_image"/>
+                                    <field name="product_quantity"/>
+                                    <field name="making_cost"/>
+                                    <field name="sub_total_price"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="sum_of_sub_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+<!--                                <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="sum_of_sub_total"/>
+                                </div>
+                                <field name="sum_of_sub_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+
+                        <page string="Payment">
+                            <field name="paymentline">
+                                <tree editable="bottom">
+                                        <field name="current_date"/>
+                                        <field name="pay_amount"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="sum_of_sub_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="sum_of_pay_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="due"/>
+                                </div>
+                                <field name="due" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_kanban" model="ir.ui.view">
+           <field name="name">product.kanban.view</field>
+           <field name="model">order.order</field>
+           <field name="arch" type="xml">
+               <kanban>
+                   <field name="id"/>
+                   <field name="customer_name"/>
+                   <field name="customer_mob"/>
+                   <field name="product_type"/>
+                   <field name="sum_of_sub_total"/>
+                   <field name="due"/>
+<!--                   <field name="product_image"/>-->
+                   <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+<!--                                <div class="o_kanban_image">-->
+<!--                                    <img height="80" width="80" t-att-src="kanban_image('visitor.data', 'v_image', record.id.raw_value)" alt="image"/>-->
+<!--                                </div>-->
+                                <div class="oe_kanban_details">
+                                    <strong>
+                                        <ul>
+                                            <li>Name :<field name="customer_name"/></li>
+                                            <li>Phone:<field name="customer_mob"/></li>
+                                            <li>Gender:<field name="product_type"/></li>
+                                            <li>Address:<field name="sum_of_sub_total"/></li>
+                                            <li>Due:<field name="due"/></li>
+                                        </ul>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+               </kanban>
+           </field>
+    </record>
+
+    <record id="action_order" model="ir.actions.act_window" >
+        <field name="name"> Order </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">order.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_payment" model="ir.actions.act_window" >
+        <field name="name"> Payment </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">order.order</field>
+        <field name="domain">[('due','>',0)]</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="action_product_delivery" model="ir.actions.act_window" >
+        <field name="name"> Delivery</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">order.order</field>
+        <field name="domain">[('order_status','=',True)]</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+    <menuitem id="jewellery_root" name="Jewellery" sequence="1"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="order" name="Order" parent="jewellery_root" action="action_order" sequence="1"/>
+    <menuitem id="payment" name="Payment" parent="jewellery_root" action="action_payment" sequence="2"/>
+    <menuitem id="delivery" name=" Delivery" parent="jewellery_root" action="action_product_delivery" sequence="3"/>
+
+</odoo>

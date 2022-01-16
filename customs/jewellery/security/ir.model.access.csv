@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_order_order,access.order.order,model_order_order,,1,1,1,1
+access_orderline_data,access.orderline.data,model_orderline_data,,1,1,1,1
+access_product-create,access.product.create,model_product_create,,1,1,1,1
+access_sell_product,access.sell.product,model_sell_product,,1,1,1,1

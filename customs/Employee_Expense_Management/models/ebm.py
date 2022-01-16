@@ -45,12 +45,31 @@ class EbmManagement(models.Model):
                 total += line.amount
             rec['purchase_pre_costing_total'] = total
 
+    @api.depends('gift_donation_pre_costing_line_ids', 'gift_donation_pre_costing_line_ids.amount')
+    def compute_gift_donation_pre_costing_total(self):
+        for rec in self:
+            total = 0
+            for line in rec.gift_donation_pre_costing_line_ids:
+                total += line.amount
+            rec['gift_donation_pre_costing_total'] = total
+
+    @api.depends('printing_stationery_pre_costing_line_ids', 'printing_stationery_pre_costing_line_ids.amount')
+    def compute_printing_stationery_pre_costing_total(self):
+        for rec in self:
+            total = 0
+            for line in rec.printing_stationery_pre_costing_line_ids:
+                total += line.amount
+            rec['printing_stationery_pre_costing_total'] = total
+
     @api.depends('entertainment_pre_costing_total', 'conveyance_pre_costing_total', 'miscellaneous_pre_costing_total',
-                 'purchase_pre_costing_total')
+                 'purchase_pre_costing_total', 'gift_donation_pre_costing_total',
+                 'printing_stationery_pre_costing_total')
     def compute_total_pre_costing_amount(self):
         for rec in self:
             rec.total_pre_costing_amount = rec.entertainment_pre_costing_total + rec.conveyance_pre_costing_total + \
-                                           rec.miscellaneous_pre_costing_total + rec.purchase_pre_costing_total
+                                           rec.miscellaneous_pre_costing_total + rec.purchase_pre_costing_total + \
+                                           rec.gift_donation_pre_costing_total + \
+                                           rec.printing_stationery_pre_costing_total
 
     ################## Compute function for Billing ###################
     @api.depends('entertainment_expense_line_ids', 'entertainment_expense_line_ids.entertainment_bill_amount')
@@ -85,10 +104,36 @@ class EbmManagement(models.Model):
                 total += line.amount
             rec['purchase_total'] = total
 
-    @api.depends('entertainment_total', 'conveyance_total', 'miscellaneous_total', 'purchase_total')
+    @api.depends('purchase_expense_line_ids', 'purchase_expense_line_ids.amount')
+    def compute_purchase_total(self):
+        for rec in self:
+            total = 0
+            for line in rec.purchase_expense_line_ids:
+                total += line.amount
+            rec['purchase_total'] = total
+
+    @api.depends('gift_donation_expense_line_ids', 'gift_donation_expense_line_ids.amount')
+    def compute_gift_donation_exp_total(self):
+        for rec in self:
+            total = 0
+            for line in rec.gift_donation_expense_line_ids:
+                total += line.amount
+            rec['gift_donation_exp_total'] = total
+
+    @api.depends('printing_stationery_expense_line_ids', 'printing_stationery_expense_line_ids.amount')
+    def compute_printing_stationery_exp_total(self):
+        for rec in self:
+            total = 0
+            for line in rec.printing_stationery_expense_line_ids:
+                total += line.amount
+            rec['printing_stationery_exp_total'] = total
+
+    @api.depends('entertainment_total', 'conveyance_total', 'miscellaneous_total', 'purchase_total',
+                 'gift_donation_exp_total', 'printing_stationery_exp_total')
     def compute_total_bill_amount(self):
         for rec in self:
-            rec.total_billing_amount = rec.entertainment_total + rec.conveyance_total + rec.miscellaneous_total + rec.purchase_total
+            rec.total_billing_amount = rec.entertainment_total + rec.conveyance_total + rec.miscellaneous_total + \
+                                       rec.purchase_total + rec.gift_donation_exp_total + rec.printing_stationery_exp_total
 
     ################### Compute Function for  Due and Excess Amount ##############
     @api.depends('total_pre_costing_amount', 'total_billing_amount')
@@ -130,8 +175,19 @@ class EbmManagement(models.Model):
         for rec in self:
             rec.purchase_difference = rec.purchase_pre_costing_total - rec.purchase_total
 
+    @api.depends('gift_donation_pre_costing_total', 'gift_donation_exp_total')
+    def compute_gift_donation_difference(self):
+        for rec in self:
+            rec.gift_donation_difference = rec.gift_donation_pre_costing_total - rec.gift_donation_exp_total
+
+    @api.depends('printing_stationery_pre_costing_total', 'printing_stationery_exp_total')
+    def compute_printing_stationery_difference(self):
+        for rec in self:
+            rec.printing_stationery_difference = rec.printing_stationery_pre_costing_total - rec.printing_stationery_exp_total
+
+    ######## field declaration ############
     ebm_sequence = fields.Char(string='EBM No :', required=True, copy=False, readonly=True, default=lambda
-        self: _('New'))  # sequence_id
+        self: _('Draft'))  # sequence_id
     user = fields.Many2one('hr.employee', string='Created By :', default=lambda self: self.env.user.employee_id,
                            readonly=True)
     dept = fields.Many2one('hr.department', string='Department :', default=lambda self: self.env.user.department_id,
@@ -143,7 +199,8 @@ class EbmManagement(models.Model):
     employee_id = fields.Many2one('hr.employee', string='Employee :', default=lambda self: self.env.user.employee_id,
                                   tracking=True)
     expense_dept = fields.Char(string='Exp Department :', tracking=True)
-    ebm_date = fields.Datetime(string='EBM Create Date :', default=datetime.today(), readonly=True, tracking=True)
+    ebm_date = fields.Datetime(string='EBM Create Date :', default=lambda self: fields.datetime.now(), select=True,
+                               readonly=True, tracking=True)
     required_date = fields.Date(string='Required Date :', required=True, tracking=True)
     purpose = fields.Text(string='Purpose :', required=True, tracking=True)
     state = fields.Selection([('draft', 'Draft Pre-Costing'), ('confirm', 'Confirm Pre-Costing'), ('department '
@@ -152,21 +209,25 @@ class EbmManagement(models.Model):
                               ('audit',
                                'Audit'),
                               ('account', 'Account'), ('management', 'Management Approved'),
-                              ('draft bill', 'Draft Bill'), ('confirm bill', 'Confirm Bill'),
+                              ('draft bill', 'Draft Bill'), ('confirm bill', 'Confirmed Bill'),
+
                               ('department manager bill', 'Department '
                                                           'Manager '),
                               ('audit bill',
                                'Audit'),
-                              ('account bill', 'Account'), ('management bill', 'Management')],
+                              ('account bill', 'Account'), ('management bill', 'Management'), ('cancel', 'Canceled')],
                              default='draft',
                              string="Status",
                              tracking=True)
     purchase = fields.Boolean(string='Purchase :', default=False, tracking=True)
     miscellaneous = fields.Boolean(string='Miscellaneous :', default=False, tracking=True)
+    gift_donation = fields.Boolean(string='Gift & Donation :', default=False, tracking=True)
+    printing_stationery = fields.Boolean(string='Printing&Stationery :', default=False, tracking=True)
 
     # Approval details
     confirm_pre_costing = fields.Char(readonly=True)
     confirm_bill = fields.Char(readonly=True)
+    cancel = fields.Char(readonly=True)
     department_approve = fields.Char(readonly=True)
     audit_approve = fields.Char(readonly=True)
     account_approve = fields.Char(readonly=True)
@@ -181,15 +242,26 @@ class EbmManagement(models.Model):
         'miscellaneous.pre_costing.lines', 'miscellaneous_pre_costing_id', string='Miscellaneous Pre-Costing Line')
     purchase_pre_costing_line_ids = fields.One2many('purchase.pre_costing.lines', 'purchase_pre_costing_id'
                                                     )
+    gift_donation_pre_costing_line_ids = fields.One2many('gift_donation.pre_costing.lines',
+                                                         'gift_donation_pre_costing_id'
+                                                         )
+    printing_stationery_pre_costing_line_ids = fields.One2many('printing_stationery.pre_costing.lines',
+                                                               'printing_stationery_pre_costing_id'
+                                                               )
+
     ############### Notebook Line Added field for Billing #####################
     entertainment_expense_line_ids = fields.One2many('entertainment.expense.lines', 'EEL_id',
                                                      string='Entertainment Line')
     conveyance_expense_line_ids = fields.One2many('conveyance.expense.lines', 'CEL_id', string='Conveyance Line')
     miscellaneous_expense_line_ids = fields.One2many('miscellaneous.expense.lines', 'MEL_id', string='Miscellaneous '
                                                                                                      'Line')
-    purchase_expense_line_ids = fields.One2many('purchase.expense.lines', 'purchase_expense_id', string='Purchase '
-                                                                                                        'Line')
-    #################### Computed Field ##################
+    purchase_expense_line_ids = fields.One2many('purchase.expense.lines', 'purchase_expense_id', string='Purchase Line')
+    gift_donation_expense_line_ids = fields.One2many('gift_donation.expense.lines', 'gift_donation_exp_id',
+                                                     string='Gift & Donation Line')
+    printing_stationery_expense_line_ids = fields.One2many('printing_stationery.expense.lines',
+                                                           'printing_stationery_exp_id')
+
+    #################### Pre-Costing Computed Field ##################
     entertainment_pre_costing_total = fields.Float(string='Entertainment Total',
                                                    compute='compute_entertainment_pre_costing_total')
     conveyance_pre_costing_total = fields.Float(string='Conveyance Total',
@@ -198,8 +270,15 @@ class EbmManagement(models.Model):
                                                    compute='compute_miscellaneous_pre_costing_total')
     purchase_pre_costing_total = fields.Float(string='Purchase Total',
                                               compute='compute_purchase_pre_costing_total')
+    gift_donation_pre_costing_total = fields.Float(string='Gift&Donation Total',
+                                                   compute='compute_gift_donation_pre_costing_total')
+    printing_stationery_pre_costing_total = fields.Float(string='Printing & Stationery Total',
+                                                         compute='compute_printing_stationery_pre_costing_total')
     total_pre_costing_amount = fields.Float(string='Total Pre-Costing Amount',
                                             compute='compute_total_pre_costing_amount')
+
+    #################### Exp Computed Field ##################
+
     entertainment_total = fields.Float(string='Entertainment Total',
                                        compute='compute_entertainment_total')
     conveyance_total = fields.Float(string='Conveyance Total',
@@ -208,6 +287,13 @@ class EbmManagement(models.Model):
                                        compute='compute_miscellaneous_total')
     purchase_total = fields.Float(string='Purchase Total',
                                   compute='compute_purchase_total')
+    gift_donation_exp_total = fields.Float(string='Gift&Donation Total',
+                                           compute='compute_gift_donation_exp_total')
+    printing_stationery_exp_total = fields.Float(string='Printing & Stationery Total',
+                                                 compute='compute_printing_stationery_exp_total')
+    total_billing_amount = fields.Float(string='Total Bill Amount',
+                                        compute='compute_total_bill_amount')
+    #################### Difference Computed Field ##################
     entertainment_difference = fields.Float(string='Entertainment Difference :',
                                             compute='compute_entertainment_difference')
     conveyance_difference = fields.Float(string='Conveyance Difference :',
@@ -216,8 +302,10 @@ class EbmManagement(models.Model):
                                             compute='compute_miscellaneous_difference')
     purchase_difference = fields.Float(string='purchase Difference :',
                                        compute='compute_purchase_difference')
-    total_billing_amount = fields.Float(string='Total Bill Amount',
-                                        compute='compute_total_bill_amount')
+    gift_donation_difference = fields.Float(string='Gift & Donation Difference :',
+                                            compute='compute_gift_donation_difference')
+    printing_stationery_difference = fields.Float(string='Printing & Stationery Difference',
+                                                  compute='compute_printing_stationery_difference')
 
     due_amount = fields.Float('Unutilized Amount', compute='compute_due_amount')
     excess_amount = fields.Float('Excess Bill Amount', compute='compute_excess_amount')
@@ -230,7 +318,17 @@ class EbmManagement(models.Model):
                 fields.datetime.now())
             rec.confirm_pre_costing = temp
             rec.state = 'confirm'
-            return fields.Date.context_today(self)
+            return
+
+    def action_cancel(self):
+        user_id = self.env.user
+        emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
+        for rec in self:
+            temp = "Canceled By : " + user_id.name + "; " + "Department : " + emp_id.department_id.name + " at " + str(
+                fields.datetime.now())
+            rec.cancel = temp
+            rec.state = 'cancel'
+            return
 
     def action_department(self):
         user_id = self.env.user
@@ -299,6 +397,28 @@ class EbmManagement(models.Model):
             rec.state = 'confirm bill'
             return fields.Date.context_today(self)
 
+    def action_confirm_conveyance_bill(self):
+        user_id = self.env.user
+        emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
+        for rec in self:
+            temp = "Conveyance Bill Confirmed By : " + user_id.name + "; " + "Department : " + \
+                   emp_id.department_id.name + " at " + str(
+                fields.datetime.now())
+            rec.confirm_bill = temp
+            rec.state = 'confirm conveyance bill'
+            return fields.Date.context_today(self)
+
+    def action_confirm_mis_bill(self):
+        user_id = self.env.user
+        emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
+        for rec in self:
+            temp = "Conveyance Bill Confirmed By : " + user_id.name + "; " + "Department : " + \
+                   emp_id.department_id.name + " at " + str(
+                fields.datetime.now())
+            rec.confirm_bill = temp
+            rec.state = 'confirm mis. bill'
+            return fields.Date.context_today(self)
+
     def action_department_bill_conf(self):
         user_id = self.env.user
         emp_id = self.env['hr.employee'].search([('name', '=', user_id.name)])
@@ -345,9 +465,9 @@ class EbmManagement(models.Model):
     # sequence value
     @api.model
     def create(self, vals):
-        if vals.get('ebm_sequence', _('New')) == _('New'):
+        if vals.get('ebm_sequence', _('Draft')) == _('Draft'):
             vals['ebm_sequence'] = self.env['ir.sequence'].next_by_code('ebm.management') or _(
-                'New')  # sequence value
+                'Draft')  # sequence value
         res = super(EbmManagement, self).create(vals)
         return res
 
@@ -419,6 +539,7 @@ class MiscellaneousPreCostingLines(models.Model):
     miscellaneous_pre_costing_id = fields.Many2one('ebm.management', string='Miscellaneous Pre-Costing:')
     product_id = fields.Many2one('ebm.product', string='Product', domain=[('is_miscellaneous', '=', True)],
                                  change_default=True, tracking=True)  # Category based product
+    designation = fields.Char(string='Designation', required=True, tracking=True)
     amount = fields.Float(string='Amount', tracking=True)
     remark = fields.Char(string='Remarks')
 
@@ -433,7 +554,31 @@ class PurchasePreCostingLines(models.Model):
     remark = fields.Char(string='Remarks')
 
 
-######## Notebook model for Entertainment ##########
+class GiftDonationPreCostingLines(models.Model):
+    _name = "gift_donation.pre_costing.lines"
+    _description = "Gift & Donation Pre-Costing Lines"
+
+    gift_donation_pre_costing_id = fields.Many2one('ebm.management', string='Conveyance Pre-Costing:')
+    product_id = fields.Many2one('ebm.product', string='Service Name', domain=[('is_gift_donation', '=', True)],
+                                 change_default=True, tracking=True)  # Category based product
+    description = fields.Text(string='Description')
+    amount = fields.Float(string='Amount')
+    remark = fields.Char(string='Remarks')
+
+
+class PrintingStationeryPreCostingLines(models.Model):
+    _name = "printing_stationery.pre_costing.lines"
+    _description = "Printing & Stationery Pre-Costing Lines"
+
+    printing_stationery_pre_costing_id = fields.Many2one('ebm.management', string='Conveyance Pre-Costing:')
+    product_id = fields.Many2one('ebm.product', string='Product Name', domain=[('is_printing_stationery', '=', True)],
+                                 change_default=True, tracking=True)  # Category based product
+    description = fields.Text(string='Description')
+    amount = fields.Float(string='Amount')
+    remark = fields.Char(string='Remarks')
+
+
+############## Notebook model for Billing ##############
 class EntertainmentExpenseLines(models.Model):
     _name = "entertainment.expense.lines"
     _description = "Entertainment Expense Lines"
@@ -464,7 +609,6 @@ class EntertainmentExpenseLines(models.Model):
             self.unit_cost = ''
 
 
-####### Notebook model for Conveyance #######
 class ConveyanceExpenseLines(models.Model):
     _name = "conveyance.expense.lines"
     _description = "Conveyance Expense Lines"
@@ -479,7 +623,6 @@ class ConveyanceExpenseLines(models.Model):
     remark = fields.Char(string='Remarks')
 
 
-######## Notebook model for Miscellaneous ########
 class MiscellaneousExpenseLines(models.Model):
     _name = "miscellaneous.expense.lines"
     _description = "Miscellaneous Expense Lines"
@@ -515,4 +658,28 @@ class PurchaseExpenseLines(models.Model):
     purchase_expense_id = fields.Many2one('ebm.management', string='Purchase Expanse:')
     purchase_ref_no = fields.Char(string='Purchase Ref. No', tracking=True)
     amount = fields.Float(string='Amount', tracking=True)
+    remark = fields.Char(string='Remarks')
+
+
+class GiftDonationExpenseLines(models.Model):
+    _name = "gift_donation.expense.lines"
+    _description = "Gift & Donation Expense Lines"
+
+    gift_donation_exp_id = fields.Many2one('ebm.management', string='Gift & Donation Expense:')
+    product_id = fields.Many2one('ebm.product', string='Service Name', domain=[('is_gift_donation', '=', True)],
+                                 change_default=True, tracking=True)  # Category based product
+    description = fields.Text(string='Description')
+    amount = fields.Float(string='Amount')
+    remark = fields.Char(string='Remarks')
+
+
+class PrintingStationeryExpenseLines(models.Model):
+    _name = "printing_stationery.expense.lines"
+    _description = "Printing & Stationery Expense Lines"
+
+    printing_stationery_exp_id = fields.Many2one('ebm.management', string='Printing & Stationery Pre-Costing:')
+    product_id = fields.Many2one('ebm.product', string='Product Name', domain=[('is_printing_stationery', '=', True)],
+                                 change_default=True, tracking=True)  # Category based product
+    description = fields.Text(string='Description')
+    amount = fields.Float(string='Amount')
     remark = fields.Char(string='Remarks')

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_eem_management" model="ir.actions.act_window">
+        <field name="name">EEM</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">eem.pre_costing</field>
+        <field name="view_mode">tree,form</field>
+
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your New EEM Record !!!
+            </p>
+        </field>
+    </record>
+
+    <!-- from view -->
+
+    <record id="view_eem_form" model="ir.ui.view">
+        <field name="name">eem.pre_costing.form</field>
+        <field name="model">eem.pre_costing</field>
+        <field name="arch" type="xml">
+
+            <form>
+
+                <header>
+                    <button id="button_confirm_pre_cost" name="action_confirm_pre_costing" string="Confirm Pre-costing"
+                            class="btn-primary"
+                            states="draft" type="object" icon="fa-check"/>
+                    <button id="button_cancel" name="action_cancel" string="Cancel" class="btn-danger"
+                            confirm="Are you sure that you need to cancel this ?"
+                            states="confirm"
+                            type="object"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirm"/>
+                </header>
+                <sheet>
+                    <!--  For Sequence Id-->
+                    <div class="oe_title">
+                        <h3>
+                            <field name="eem_sequence" readonly="1"/>
+                        </h3>
+                    </div>
+                    <!--   End    -->
+                    <group>
+                        <group>
+                            <field name="user" readonly="1"/>
+                            <field name="dept" readonly="1"/>
+                            <field name="employee_id"/>
+                            <field name="expense_dept"/>
+                        </group>
+                        <group>
+                            <field name="eem_date"/>
+                            <field name="required_date" />
+                          <!-- options='{"datepicker": {"daysOfWeekDisabled": [5, 6]}}' #Disable some days from
+                     date-picker-->
+                            <field name="purpose" placeholder="Purpose of Expense"/>
+                        </group>
+
+                    </group>
+                    <group>
+                    <group>
+                        <field name="purchase" eval="False" class="oe-inline"/>
+                        <field name="miscellaneous" eval="False" class="oe-inline"/>
+                    </group>
+                    <group>
+                         <field name="printing_stationery" eval="False" class="oe-inline"/>
+                         <field name="gift_donation" eval="False" class="oe-inline"/>
+                        </group>
+                    </group>
+
+                    <!-- Bottom part in Notebook -->
+                    <h3>Pre-costing</h3>
+                    <notebook >
+                        <page string="Entertainment" name="entertainment_PreCosting">
+                            <field name="entertainment_pre_costing_line_ids"
+                                   attrs="{'readonly':['|',('state','=','confirm'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" placeholder="Product name"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id" placeholder="Product name"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="entertainment_pre_costing_total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                        <page string="Conveyance" name="conveyance_PreCosting">
+                            <field name="conveyance_pre_costing_line_ids"
+                                    attrs="{'readonly':['|',('state','=','confirm'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" placeholder="Product name"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id" placeholder="Product name"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="conveyance_pre_costing_total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                        <page string="Miscellaneous" name="miscellaneous_PreCosting"
+                              attrs="{'invisible': [('miscellaneous', '=', False)]}">
+                            <field name="miscellaneous_pre_costing_line_ids"
+                             attrs="{'readonly':['|',('state','=','confirm'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" placeholder="Product Name"/>
+                                    <field name="designation" placeholder="Designation"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id" placeholder="Product Name"/>
+                                            </group>
+                                            <group>
+                                                <field name="designation" placeholder="Designation"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="miscellaneous_pre_costing_total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+
+                        <page string="Purchase" name="Purchase_PreCosting"
+                              attrs="{'invisible': [('purchase',  '=', False)]}">
+                            <field name="purchase_pre_costing_line_ids"  attrs="{'readonly':['|',('state','=','confirm'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="purchase_ref_no" placeholder="Purchase ref. No"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="purchase_ref_no" placeholder="Purchase ref. No"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="purchase_pre_costing_total"/>
+                            </group>
+                        </page>
+                         <page string="Gift &amp; Donation" name="Gift &amp; Donation_PreCosting"
+                              attrs="{'invisible': [('gift_donation',  '=', False)]}">
+                            <field name="gift_donation_pre_costing_line_ids"  attrs="{'readonly':['|','|',('state','=','confirm'),('state','=','confirm bill'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" placeholder="Service Name"/>
+                                    <field name="description" placeholder="Description"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id" placeholder="Product Name"/>
+                                            </group>
+                                            <group>
+                                                <field name="description" placeholder="Description"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="gift_donation_pre_costing_total"/>
+                            </group>
+                        </page>
+                        <page string="Printing &amp; Stationery" name="Printing &amp; Stationery_PreCosting"
+                              attrs="{'invisible': [('printing_stationery',  '=', False)]}">
+                            <field name="printing_stationery_pre_costing_line_ids"  attrs="{'readonly':['|','|',('state','=','confirm'),('state','=','confirm bill'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" placeholder="Product Name"/>
+                                    <field name="description" placeholder="Description"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id" placeholder="Product Name"/>
+                                            </group>
+                                            <group>
+                                                <field name="description" placeholder="Description"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="printing_stationery_pre_costing_total"/>
+                            </group>
+                        </page>
+
+
+                    </notebook>
+                    <br/>
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="total_pre_costing_amount"/>
+                    </group>
+                    <h3>Pre-Costing Approver Details:</h3>
+                    <field name="confirm_pre_costing" style="color: Dim Gray;"/>
+                    <field name="cancel" style="color: Dim Gray;"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view-->
+
+    <record id="view_eem_tree" model="ir.ui.view">
+        <field name="name">eem.pre_costing.tree</field>
+        <field name="model">eem.pre_costing</field>
+        <field name="arch" type="xml">
+            <tree sample="1" multi_edit="1">
+                <field name="eem_sequence"/>
+                <field name="user" optional="show"/>
+                <field name="dept" optional="show"/>
+                <field name="employee_id" optional="show"/>
+                <field name="expense_dept" optional="show"/>
+                <field name="eem_date" optional="show"/>
+                <field name="required_date" optional="show"/>
+                <field name="purpose" optional="show"/>
+                <field name="state" widget="badge" decoration-danger="state == 'cancel'"
+                       decoration-success="state == 'confirm'" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem id="menu_EEM_system_root"
+              name="EEM System"
+              sequence="2"/>
+
+    <menuitem id="menu_EEM_root"
+              name="EEM"
+              parent="menu_EEM_system_root"
+              sequence="10"/>
+    <menuitem id="menu_EEM_Pre_costing_root"
+              name="Pre-Costing"
+              parent="menu_EEM_root"
+              action="action_eem_management"
+              sequence="10"/>
+</odoo>

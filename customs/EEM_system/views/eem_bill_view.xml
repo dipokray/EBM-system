@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_eem_bill_management" model="ir.actions.act_window">
+        <field name="name">EEM</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">eem.billing</field>
+        <field name="view_mode">tree,form</field>
+
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your New EEM Bill Record !!!
+            </p>
+        </field>
+    </record>
+
+    <!-- from view -->
+
+    <record id="view_eem_bill_form" model="ir.ui.view">
+        <field name="name">eem.billing.form</field>
+        <field name="model">eem.billing</field>
+        <field name="arch" type="xml">
+
+            <form >
+
+                <header>
+                    <button id="button_confirm_bill" name="action_confirm_bill" string="Bill Confirmed"
+                            class="btn-primary"
+                            states="draft" type="object" icon="fa-check"/>
+                    <button id="button_cancel" name="action_bill_cancel" string="Cancel" class="btn-danger"
+                            confirm="Are you sure that you need to cancel this ?"
+                            states="confirm bill"
+                            type="object"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirm bill"/>
+                </header>
+                <sheet>
+                    <!--  For Sequence Id-->
+                    <div class="oe_title">
+                        <h3>
+                            <field name="eem_bill_sequence" readonly="1"/>
+                        </h3>
+                    </div>
+                    <!--   End    -->
+                    <group>
+                        <group>
+                            <field name="user" readonly="1"/>
+                            <field name="dept" readonly="1"/>
+                            <field name="reference_id"/>
+                            <field name="employee_id"/>
+                            <field name="expense_dept"/>
+                        </group>
+                        <group>
+                            <field name="eem_date"/>
+                            <field name="purpose" placeholder="Purpose of Expense"/>
+                            <field name="requested_amount"/>
+                        </group>
+
+                    </group>
+                    <group>
+                        <group>
+                        <field name="purchase" eval="False" class="oe-inline"/>
+                        <field name="miscellaneous" eval="False" class="oe-inline"/>
+                     </group>
+                        <group>
+                         <field name="printing_stationery" eval="False" class="oe-inline"/>
+                         <field name="gift_donation" eval="False" class="oe-inline"/>
+                        </group>
+                    </group>
+
+
+
+                    <!-- Bottom part in Notebook -->
+                    <h3>Billing</h3>
+                    <notebook>
+                        <page string="Entertainment" name="entertainment_expense">
+                            <field name="entertainment_expense_line_ids"
+                                   attrs="{'readonly':['|',('state','=','confirm bill'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" placeholder="Product name"/>
+                                    <field name="req_qty" optional="show" placeholder="Quantity"/>
+                                    <field name="unit_cost" optional="show" placeholder="Cost of product"/>
+                                    <field name="payment_date" optional="show" placeholder="Payment date"/>
+                                    <field name="entertainment_bill_amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id" placeholder="Product name"/>
+                                            </group>
+                                            <group>
+                                                <field name="req_qty" placeholder="Quantity"/>
+                                            </group>
+                                            <group>
+                                                <field name="unit_cost" placeholder="Cost of product"/>
+                                            </group>
+                                            <group>
+                                                <field name="payment_date" placeholder="Payment date"/>
+                                            </group>
+                                            <group>
+                                                <field name="entertainment_bill_amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="entertainment_total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+
+                        <page string="Conveyance" name="conveyance_expense">
+                            <field name="conveyance_expense_line_ids"
+                                  attrs="{'readonly':['|',('state','=','confirm bill'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" placeholder="Product name"/>
+                                    <field name="con_from" optional="show" placeholder="Start From"/>
+                                    <field name="con_to" optional="show" placeholder="Destination"/>
+                                    <field name="payment_date" optional="show" placeholder="Payment Date"/>
+                                    <field name="conveyance_bill_amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="product_id" placeholder="Product name"/>
+                                        </group>
+                                        <group>
+                                            <field name="con_from" placeholder="Start From"/>
+                                        </group>
+                                        <group>
+                                            <field name="con_to" laceholder="Destination"/>
+                                        </group>
+                                        <group>
+                                            <field name="payment_date" placeholder="Payment Date"/>
+                                        </group>
+                                        <group>
+                                            <field name="conveyance_bill_amount" placeholder="Amount"/>
+                                        </group>
+                                        <group>
+                                            <field name="remark" placeholder="Remarks"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="conveyance_total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                        <page string="Miscellaneous" name="miscellaneous_expenses"
+                              attrs="{'invisible': [('miscellaneous', '=', False)]}">
+                            <field name="miscellaneous_expense_line_ids"
+                                  attrs="{'readonly':['|',('state','=','confirm bill'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="name" optional="show"/>
+                                    <field name="dept" optional="show"/>
+                                    <field name="designation" optional="show"/>
+                                    <field name="dist" optional="show"/>
+                                    <field name="phone" optional="show"/>
+                                    <field name="payment_date" optional="show"/>
+                                    <field name="work_place" optional="show"/>
+                                    <field name="miscellaneous_bill_amount" optional="show"/>
+                                    <field name="purpose" optional="show"/>
+                                    <field name="remark" optional="show" />
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="product_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="name"/>
+                                        </group>
+                                        <group>
+                                            <field name="dept"/>
+                                        </group>
+                                        <group>
+                                            <field name="designation"/>
+                                        </group>
+                                        <group>
+                                            <field name="dist"/>
+                                        </group>
+                                        <group>
+                                            <field name="phone"/>
+                                        </group>
+                                        <group>
+                                            <field name="payment_date"/>
+                                        </group>
+                                        <group>
+                                            <field name="work_place"/>
+                                        </group>
+                                        <group>
+                                            <field name="miscellaneous_bill_amount"/>
+                                        </group>
+                                        <group>
+                                            <field name="purpose"/>
+                                        </group>
+                                        <group>
+                                            <field name="remark"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="miscellaneous_total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                        <page string="Purchase" name="Purchase_expanse"
+                              attrs="{'invisible': [('purchase',  '=', False)]}">
+                            <field name="purchase_expense_line_ids"
+                                   attrs="{'readonly':['|',('state','=','confirm bill'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="purchase_ref_no" placeholder="Purchase ref. No"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="purchase_ref_no" placeholder="Purchase ref. No"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="purchase_total" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                        <page string="Gift &amp; Donation" name="Gift &amp; Donation_Exp"
+                              attrs="{'invisible': [('gift_donation',  '=', False)]}">
+                            <field name="gift_donation_expense_line_ids"
+                                   attrs="{'readonly':['|',('state','=','confirm bill'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" placeholder="Service Name"/>
+                                    <field name="description" placeholder="Description"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id" placeholder="Product Name"/>
+                                            </group>
+                                            <group>
+                                                <field name="description" placeholder="Description"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="gift_donation_exp_total"/>
+                            </group>
+                        </page>
+
+                         <page string="Printing &amp; Stationery" name="Printing &amp; Stationery_Exp"
+                              attrs="{'invisible': [('printing_stationery',  '=', False)]}">
+                            <field name="printing_stationery_expense_line_ids"  attrs="{'readonly':['|','|',('state','=','confirm'),('state','=','confirm bill'),('state', '=', 'cancel')]}">
+                                <tree editable="bottom">
+                                    <field name="product_id" placeholder="Product Name"/>
+                                    <field name="description" placeholder="Description"/>
+                                    <field name="amount" optional="show" placeholder="Amount"/>
+                                    <field name="remark" optional="show" placeholder="Remarks"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <group>
+                                                <field name="product_id" placeholder="Product Name"/>
+                                            </group>
+                                            <group>
+                                                <field name="description" placeholder="Description"/>
+                                            </group>
+                                            <group>
+                                                <field name="amount" placeholder="Amount"/>
+                                            </group>
+                                            <group>
+                                                <field name="remark" placeholder="Remarks"/>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="printing_stationery_exp_total"/>
+                            </group>
+                        </page>
+
+
+                    </notebook>
+                    <br/>
+                    <!--Notebook End-->
+                    <group class="oe_subtotal_footer" style="font-size: 14px !important;">
+                        <field name="total_billing_amount" class="oe_subtotal_footer_separator"/>
+                        <field name="due_amount"/>
+                        <field name="excess_amount"/>
+                    </group>
+
+
+                    <h3>Bill Approver Details :</h3>
+                    <field name="confirm_bill" style="color: Dim Gray;"/>
+                    <field name="cancel" style="color: Dim Gray;"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree view-->
+
+    <record id="view_eem_bill_tree" model="ir.ui.view">
+        <field name="name">eem.billing.tree</field>
+        <field name="model">eem.billing</field>
+        <field name="arch" type="xml">
+            <tree sample="1" multi_edit="1"  >
+                <field name="eem_bill_sequence"/>
+                <field name="user" optional="show"/>
+                <field name="dept" optional="show"/>
+                <field name="employee_id" optional="show"/>
+                <field name="expense_dept" optional="show"/>
+                <field name="eem_date" optional="show"/>
+                <field name="reference_id" optional="show"/>
+                <field name="state" widget="badge" decoration-danger="state == 'cancel'"
+                       decoration-success="state == 'confirm bill'" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_EEM_bill"
+              name="Billing"
+              parent="menu_EEM_root"
+              action="action_eem_bill_management"
+              sequence="30"/>
+</odoo>

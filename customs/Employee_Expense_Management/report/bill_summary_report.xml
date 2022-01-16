@@ -109,7 +109,7 @@
                                         <span t-field="o.miscellaneous_difference" style="color:red;"/>
                                     </td>
                                 </tr>
-                                <tr>
+                                  <tr>
                                     <td>
                                         <span>Purchase</span>
                                     </td>
@@ -123,6 +123,35 @@
                                         <span t-field="o.purchase_difference" style="color:red;"/>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <span>Gift &amp; Donation</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.gift_donation_pre_costing_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.gift_donation_exp_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.gift_donation_difference" style="color:red;"/>
+                                    </td>
+                                </tr>
+                                  <tr>
+                                    <td>
+                                        <span>Printing &amp; Stationery</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.printing_stationery_pre_costing_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.printing_stationery_exp_total"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.printing_stationery_difference" style="color:red;"/>
+                                    </td>
+                                </tr>
+
                             </tbody>
                         </table>
                         <h4>Pre Costing and Bill Short Summary</h4>
@@ -150,6 +179,26 @@
                                     <span t-field="o.excess_amount" style="color:red;"/>
                                 </h5>
                             </div>
+                        </div>
+                    </div>
+                <br/>
+                    <br/>
+                     <div class="row mb32 text-left" style="margin-top: 10mm;">
+                        <div class="col-4 text-left">
+                            <strong>-----------------</strong>
+                            <br/>
+                            <strong class="text-center">Prepared By</strong>
+
+                        </div>
+                        <div class="col-4 text-center">
+                            <strong>------------------</strong>
+                            <br/>
+                            <strong class="text-center">Checked By</strong>
+                        </div>
+                        <div class="col-4 text-right">
+                            <strong>------------------</strong>
+                            <br/>
+                            <strong class="text-center">Authorized By</strong>
                         </div>
                     </div>
                 </t>

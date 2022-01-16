@@ -25,7 +25,7 @@
         'views/point_of_sale_view.xml',
         'views/pos_order_view.xml',
         'views/pos_category_view.xml',
-        'views/product_view.xml',
+        'views/eem_product_view.xml',
         'views/account_journal_view.xml',
         'views/res_config_settings_views.xml',
         'views/pos_payment_method_views.xml',

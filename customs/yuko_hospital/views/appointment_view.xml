@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    Server Action  IN  Action Button  instead of confirm button -->
+    <record id="action_confirm_appointments" model="ir.actions.server">
+        <field name="name">Confirm Appointment</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="yuko_hospital.model_hospital_appointment"/>
+        <field name="binding_model_id" ref="yuko_hospital.model_hospital_appointment"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">records.action_confirm()</field>
+    </record>
+
+    <!-- Tree view-->
+
+    <record id="view_appointment_tree" model="ir.ui.view">
+        <field name="name">hospital.appointment.tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+
+            <tree sample="1" multi_edit="1">
+                <header>
+                    <button name="action_done" string="Mark As Done" class="btn-primary" type="object"/>
+                </header>
+                <field name="sequence_no"/>
+                <field name="patient_id"/>
+                <field name="reference"/>
+                <field name="doctor_id"/>
+                <field name="age" optional="show"/>
+                <field name="gender" optional="show"/>
+                <field name="phone" optional="show"/>
+                <field name="date_appointment" optional="show"/>
+                <field name="appointment_time" optional="show"/>
+                <field name="note" optional="show"/>
+                <field name="state" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- from view -->
+
+    <record id="view_appointment_form" model="ir.ui.view">
+        <field name="name">hospital.appointment.form</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button id="button_confirm" name="action_confirm" string="Confirm" class="btn-primary"
+                            states="draft" confirm="Are you sure that you need to confirm this ?" type="object"/>
+                    <button id="button_done" name="action_done" string="Make As Done" class="btn-primary"
+                            states="confirm" type="object"/>
+                    <button id="button_draft" name="action_draft" string="Set To Draft" class="btn-primary"
+                            states="cancel" type="object"/>
+                    <button name="action_url" string="Open URL" class="btn-primary"
+                            type="object"/>
+                    <button id="button_cancel" name="action_cancel" string="Cancel" class="btn-primary"
+                            states="draft,done,confirm" confirm="Are you sure that you need to cancel this ?"
+                            type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,confirm"/>
+                </header>
+
+                <sheet>
+                    <!--  For Sequence Id-->
+                    <div class="oe_title">
+                        <h3>
+                            <field name="sequence_no" readonly="1"/>
+                        </h3>
+                    </div>
+                    <!--   End    -->
+                    <group>
+                        <group>
+                            <field name="patient_id" options="{'no_create_edit': True}"/>
+<!--                            <field name="patient_id" options="{'no_open': True, 'no_create_edit': True}"/>-->
+                            <field name="age"/>
+                            <field name="gender" readonly="1" force_save="1"/>
+                            <field name="phone"/>
+                            <field name="reference"/>
+                        </group>
+                        <group>
+                            <field name="doctor_id" options="{'no_create': True}"/>
+<!--                            <field name="doctor_id" options="{'no_open': True, 'no_create': True}"/>-->
+                            <field name="date_appointment"/>
+                            <field name="appointment_time"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <!-- Bottom part in Notebook -->
+                    <notebook>
+                        <page string="Doctor Prescription" name="doctor_prescription">
+                            <group>
+                                <field name="prescription"/>
+                            </group>
+                        </page>
+                        <page string="Medicine" name="medicine">
+                            <field name="prescription_line_ids">
+                                <tree editable="top">
+                                    <field name="name"/>
+                                    <field name="qty"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name"/>
+                                    </group>
+                                    <group>
+                                        <field name="qty"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Other Info" name="other_info">
+                            <group>
+                                <field name="note"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <!--- Notebook End-->
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- search view -->
+
+    <record id="view_appointment_search" model="ir.ui.view">
+        <field name="name">hospital.appointment.search</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <search string="Patients">
+                <field name="sequence_no"/>
+                <field name="patient_id"/>
+                <field name="phone"/>
+
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter string="Patient" name="patient_id" context="{'group_by' : 'patient_id'}"/>
+                    <filter string="Patient Phone Number" name="phone" context="{'group_by' : 'phone'}"/>
+                </group>
+                <!-- Side ber manue for search plane-->
+                <searchpanel>
+                    <field name="gender" string="Gender" icon="fas fa-venus-mars" enable_counters="1"/>
+                    <field name="state" string="Status" select="multi" icon="fas fa-sign-out"
+                           enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action view -->
+
+    <record id="action_hospital_appointment" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <!--<field name="context">{ 'search_default_patient_gender' : 1, 'search_default_patient_name' : 1}</field>-->
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your First Appointment !
+            </p>
+        </field>
+    </record>
+
+    <!-- Top menu item -->
+
+    <menuitem id="menu_appointment_root"
+              name="Appointments"
+              parent="menu_hospital_root"
+              sequence="20"/>
+
+    <menuitem id="menu_appointment"
+              name="Appointments"
+              parent="menu_appointment_root"
+              action="action_hospital_appointment"
+              sequence="10"/>
+    <menuitem id="menu_create_appointment"
+              name="Create Appointment"
+              parent="menu_appointment_root"
+              action="action_create_appointment"
+              sequence="20"/>
+    <menuitem id="menu_search_appointment"
+              name="View Appointment"
+              parent="menu_appointment_root"
+              action="action_search_appointment"
+              sequence="30"/>
+</odoo>

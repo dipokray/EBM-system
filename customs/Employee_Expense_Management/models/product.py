@@ -12,6 +12,8 @@ class EbmProduct(models.Model):
     is_entertainment = fields.Boolean(string='Is Entertainment :', default=False, tracking=True)
     is_conveyance = fields.Boolean(string='Is Conveyance :', default=False, tracking=True)
     is_miscellaneous = fields.Boolean(string='Is Miscellaneous :', default=False, tracking=True)
+    is_gift_donation = fields.Boolean(string='Is Gift & Donation :', default=False, tracking=True)
+    is_printing_stationery = fields.Boolean(string='Is Printing & Stationery :', default=False, tracking=True)
     unit_cost = fields.Float(string='Cost', tracking=True)
     note = fields.Text(string='Note : ', tracking=True)
 

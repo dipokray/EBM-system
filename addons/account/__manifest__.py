@@ -49,7 +49,7 @@ You could use this simplified accounting in case you work with an (external) acc
         'views/terms_template.xml',
         'wizard/account_validate_move_view.xml',
         'views/res_company_views.xml',
-        'views/product_view.xml',
+        'views/eem_product_view.xml',
         'views/account_analytic_view.xml',
         'views/report_invoice.xml',
         'report/account_invoice_report_view.xml',

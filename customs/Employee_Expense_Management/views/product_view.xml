@@ -31,6 +31,8 @@
                             <field name="is_entertainment"/>
                             <field name="is_conveyance"/>
                             <field name="is_miscellaneous"/>
+                            <field name="is_printing_stationery"/>
+                            <field name="is_gift_donation"/>
                         </group>
                     </group>
                 </sheet>
@@ -53,6 +55,8 @@
                 <field name="is_entertainment" optional="show"/>
                 <field name="is_conveyance" optional="show"/>
                 <field name="is_miscellaneous" optional="show"/>
+                <field name="is_printing_stationery" optional="show"/>
+                <field name="is_gift_donation" optional="show"/>
                 <field name="unit_cost" optional="show"/>
                 <field name="note" optional="show"/>
             </tree>

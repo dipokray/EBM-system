@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_sell_tree_view" model="ir.ui.view">
+        <field name="name">sell.tree.view</field>
+        <field name="model">sell.product</field>
+        <field name="arch" type="xml">
+            <tree string="Sell">
+                <field name="product_seq"/>
+                <field name="product_name"/>
+                <field name="gold_quality"/>
+                <field name="gold_rate"/>
+                <field name="gold_weight"/>
+                <field name="gold_price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_sell_form_view" model="ir.ui.view">
+        <field name="name">sell.form.view</field>
+        <field name="model">sell.product</field>
+        <field name="arch" type="xml">
+            <form string="Sell">
+                <sheet>
+                    <group class="oe_left">
+                        <field name="product_seq"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="product_name"/>
+                            <br/>
+                            <field name="sell_product_quantity"/>
+                            <br/>
+                            <field name="gold_quality"/>
+                            <br/>
+                            <field name="product_image" widget="image"/>
+                        </group>
+                        <group>
+                            <field name="gold_rate"/>
+                            <br/>
+                            <field name="gold_weight"/>
+                            <br/>
+                            <field name="making_cost"/>
+                            <br/>
+                            <field name="tax"/>
+                            <br/>
+                            <field name="gold_price_new"/>
+                        </group>
+                    </group>
+                    <br/>
+                    <br/>
+                    <group class="oe_subtotal_footer oe_right">
+                                <field name="gold_price_new" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="payment"  options="{'currency_field': 'currency_id'}"/>
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="due_amount"/>
+                                </div>
+                                <field name="due_amount" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_sell_kanban" model="ir.ui.view">
+           <field name="name">sell.kanban.view</field>
+           <field name="model">sell.product</field>
+           <field name="arch" type="xml">
+               <kanban>
+                   <field name="id"/>
+                   <field name="product_name"/>
+                   <field name="sell_product_quantity"/>
+                   <field name="gold_quality"/>
+                   <field name="gold_weight"/>
+                   <field name="gold_price"/>
+<!--                   <field name="product_image"/>-->
+                   <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+<!--                                <div class="o_kanban_image">-->
+<!--                                    <img height="80px" width="300px" t-att-src="kanban_image('product.create', 'product_image', record.id.raw_value)" alt="image"/>-->
+<!--                                </div>-->
+                                <div class="oe_kanban_details">
+                                    <strong>
+                                        <ul>
+                                            <li>Product Name :<field name="product_name"/></li>
+                                            <li>Product Quantity :<field name="sell_product_quantity"/></li>
+                                            <li>Product Quality :<field name="gold_quality"/></li>
+                                            <li>Gold Weight :<field name="gold_weight"/></li>
+                                            <li>Price   :<field name="gold_price"/></li>
+<!--                                            <li>Due:<field name="due"/></li>-->
+<!--                                            <li>Due:<field name="product_image"/></li>-->
+                                        </ul>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+               </kanban>
+           </field>
+    </record>
+
+    <record id="product_sell_action" model="ir.actions.act_window">
+        <field name="name">Sell</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sell.product</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="jewellery_root" name="Jewellery" sequence="1"/>
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="sell" name="Sell" parent="jewellery_root" action="product_sell_action"/>
+</odoo>

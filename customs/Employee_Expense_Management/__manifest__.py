@@ -11,11 +11,10 @@
     'depends': ['mail',
                 'hr',
                 'base',
-                'IOU_Management',
                 ],
     'data': [
-        'security/ir.model.access.csv',
         'security/security.xml',
+        'security/ir.model.access.csv',
         'data/data.xml',
         'wizard/create_iou_view.xml',
         'views/ebm_view.xml',

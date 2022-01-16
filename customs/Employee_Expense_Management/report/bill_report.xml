@@ -52,7 +52,7 @@
                             <div class="col-6 text-left" style="padding-left:58px;">
                                 <h5>
                                     <b>Total Bill Amount :</b>
-                                    <span t-field="o.total_billing_amount"/>
+                                    <span t-field="o.total_billing_amount" style="color:black;"/>
                                 </h5>
                             </div>
                         </div>
@@ -76,6 +76,9 @@
                                         </th>
                                         <th name="th_entertainment_bill_amount" class="text-left">
                                             <span>Amount</span>
+                                        </th>
+                                         <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
                                         </th>
                                     </tr>
                                 </thead>
@@ -110,7 +113,7 @@
                                                 <strong>Total Amount</strong>
                                             </td>
                                             <td class="text-right">
-                                                <span t-field="o.entertainment_total"/>
+                                                <span t-field="o.entertainment_total" style="color:black;"/>
                                             </td>
                                         </tr>
                                     </table>
@@ -138,6 +141,9 @@
                                         <th name="th_amount" class="text-left">
                                             <span>Amount</span>
                                         </th>
+                                         <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -157,6 +163,9 @@
                                             </td>
                                             <td>
                                                 <span t-field="line.conveyance_bill_amount"/>
+                                            </td>
+                                             <td>
+                                                <span t-field="line.remark"/>
                                             </td>
                                         </tr>
                                     </t>
@@ -213,6 +222,9 @@
                                         <th name="th_miscellaneous_bill_amount" class="text-left">
                                             <span>Amount</span>
                                         </th>
+                                         <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -247,6 +259,9 @@
                                             </td>
                                             <td>
                                                 <span t-field="line.miscellaneous_bill_amount"/>
+                                            </td>
+                                             <td>
+                                                <span t-field="line.remark"/>
                                             </td>
                                         </tr>
                                     </t>
@@ -310,6 +325,112 @@
                                             </td>
                                             <td class="text-right">
                                                 <span t-field="o.purchase_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                     </t>
+                        <t t-if="o.gift_donation_expense_line_ids">
+                            <h4>Gift &amp; Donation :</h4>
+                            <table class="table table-sm o_main_table" name="Gift &amp; Donation">
+                                <thead>
+                                    <tr>
+                                        <th name="th_product_id" class="text-left">
+                                            <span>Service Name</span>
+                                        </th>
+                                         <th name="th_description" class="text-left">
+                                            <span>Description</span>
+                                        </th>
+                                        <th name="th_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                         <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.gift_donation_expense_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                             <td>
+                                                <span t-field="line.description"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.amount"/>
+                                            </td>
+                                             <td>
+                                                <span t-field="line.remark"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                          </table>
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-3">
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_total_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.gift_donation_exp_total"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                     </t>
+                        <t t-if="o.printing_stationery_expense_line_ids">
+                            <h4>Printing &amp; Stationery :</h4>
+                            <table class="table table-sm o_main_table" name="Printing &amp; Stationery">
+                                <thead>
+                                    <tr>
+                                        <th name="th_product_id" class="text-left">
+                                            <span>Product Name</span>
+                                        </th>
+                                         <th name="th_description" class="text-left">
+                                            <span>Description</span>
+                                        </th>
+                                        <th name="th_amount" class="text-left">
+                                            <span>Amount</span>
+                                        </th>
+                                         <th name="th_remark" class="text-left">
+                                            <span>Remarks</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.printing_stationery_expense_line_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                             <td>
+                                                <span t-field="line.description"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.amount"/>
+                                            </td>
+                                             <td>
+                                                <span t-field="line.remark"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                          </table>
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-3">
+                                    <table class="table table-sm">
+                                        <tr class="border-black">
+                                            <td name="td_total_label">
+                                                <strong>Total Amount</strong>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.printing_stationery_exp_total"/>
                                             </td>
                                         </tr>
                                     </table>
