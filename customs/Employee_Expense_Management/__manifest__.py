@@ -18,7 +18,9 @@
         'data/data.xml',
         'wizard/create_iou_view.xml',
         'views/ebm_view.xml',
+
         'views/product_view.xml',
+        'report/card_report.xml',
         'report/ebm_details_report.xml',
         'report/pre_costing_details_report.xml',
         'report/bill_report.xml',

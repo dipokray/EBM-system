@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<data noupdate="1">
+<!-- Sequence for daily budget database serial number    -->
+<record id="seq_daily_budget" model="ir.sequence">
+    <field name="name">Daily Budget Sequence</field>
+    <field name="code">daily.budget</field>
+    <field name="prefix">IND</field>
+    <field name="padding">5</field>
+    <field name="company_id" eval="False"/>
+</record>
+
+
+
+</data>
+</odoo>

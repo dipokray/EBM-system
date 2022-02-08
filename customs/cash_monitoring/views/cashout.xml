@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--	Tree view      -->
+    <record id="cashout_tree_view" model="ir.ui.view">
+			<field name="name">cashout.tree.view</field>
+			<field name="model">cashbalance.cashbalance</field>
+			<field name="arch" type="xml">
+				<tree string="Cash-Out">
+                                <field name="a"/>
+								<field name="b"/>
+								<field name="c"/>
+								<field name="d"/>
+								<field name="e"/>
+								<field name="f"/>
+						 		<field name="g"/>
+						 		<field name="h"/>
+                                <field name="dateo"/>
+								<field name="amount"/>
+								<field name="cashout"/>
+								<field name="sum_a"/>
+								<field name="sum_b"/>
+								<field name="sum_c"/>
+								<field name="sum_d"/>
+								<field name="sum_e"/>
+								<field name="sum_f"/>
+								<field name="sum_g"/>
+								<field name="sum_h"/>
+								<field name="Balance"/>
+				</tree>
+			</field>
+	</record>
+<!-- End Tree View   -->
+
+    <!-- Form View for  -->
+		<record id="cashout_form_view" model="ir.ui.view">
+			<field name="name">cashout.form.view</field>
+			<field name="model">cashbalance.cashbalance</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group style="text-align:center" string="Yuko Leather Goods Ltd.">
+						</group>
+						<group style="text-align:center" string="Cash-Out Details">
+						</group>
+
+						<group>
+						<group string="Tk-Quantity">
+						</group>
+						</group>
+
+						<group>
+						 	<group>
+                                <field name="a"/>
+                                 <br/>
+								<field name="b"/>
+                                 <br/>
+								<field name="c"/>
+                                 <br/>
+								<field name="d"/>
+                                 <br/>
+								<field name="e"/>
+                                 <br/>
+								<field name="f"/>
+                                 <br/>
+						 		<field name="g"/>
+                                 <br/>
+						 		<field name="h"/>
+                                 <br/>
+                                <field name="date"/>
+                                 <br/>
+						 	</group>
+                            <group>
+								<field name="amount"/>
+                                <field name="cashout"/>
+								<br/>
+								<field name="sum_a"/>
+								<br/>
+								<field name="sum_b"/>
+								<br/>
+								<field name="sum_c"/>
+								<br/>
+								<field name="sum_d"/>
+								<br/>
+								<field name="sum_e"/>
+								<br/>
+								<field name="sum_f"/>
+								<br/>
+								<field name="sum_g"/>
+								<br/>
+								<field name="sum_h"/>
+								<br/>
+								<field name="Balance"/>
+								<br/>
+
+                            </group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+	<record id="action_cashout" model="ir.actions.act_window" >
+		<field name="name"> Cash-Out </field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">cashbalance.cashbalance</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="Cash_root" name="Yuko Cash Monitoring" sequence="1"/>
+	<menuitem id="cash_out" name="Cash-Out" parent="Cash_root" action="action_cashout"/>
+</odoo>

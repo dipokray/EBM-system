@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--    Tree view      -->
+    <record id="visitor_tree_view" model="ir.ui.view">
+        <field name="name">visitor.tree.view</field>
+        <field name="model">visitor.data</field>
+        <field name="arch" type="xml">
+            <tree string="visitor">
+                <field name="visitor_seq"/>
+                <field name="v_phn"/>
+                <field name="v_name"/>
+                <field name="v_gender"/>
+                <field name="v_company"/>
+                <field name="v_email"/>
+                <field name="v_address"/>
+<!--                <field name="v_image" widget="image"/>-->
+            </tree>
+        </field>
+    </record>
+    <!-- End Tree View   -->
+
+
+
+
+    <!-- Form View for  -->
+    <record id="visitor_form_view" model="ir.ui.view">
+        <field name="name">visitor.form.view</field>
+        <field name="model">visitor.data</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mail" type="object"  string="Send Mail" class="oe_highlight"/>
+<!--                    <button name="notification" type="object"  string="Send " class="oe_highlight"/>-->
+                </header>
+                <sheet>
+<!--                     Sequence sections-->
+                    <div class="oe_title">
+                        <h2>
+                            <field name="visitor_seq" readonly="1"/>
+                        </h2>
+                    </div>
+<!--                    End Sequence sections-->
+<!--                    <group style="text-align:center" string="WELCOME TO YUKO LEATHER GOODS LTD."/>-->
+                    <group>
+                    <field style="height:50px; width:50px;" name="v_image" widget="image"/>
+                    </group>
+                    <group>
+                        <group>
+                        <field name="I_AM"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="v_name"/>
+                            <br/>
+                            <field name="v_phn" widget="phone"/>
+                            <br/>
+                            <field name="v_gender"/>
+                        </group>
+                        <group>
+                            <field name="v_company"/>
+                            <br/>
+                            <field name="v_email" widget="email"/>
+                            <br/>
+                            <field name="v_address"/>
+                        </group>
+                    </group>
+                </sheet>
+                    <!-- Add Chatter Form View for  -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+                    <!-- End Add chatter Form View for  -->
+            </form>
+        </field>
+    </record>
+    <!-- End Form View for  -->
+
+    <record id="visitor_kanban" model="ir.ui.view">
+           <field name="name">visitor.kanban.view</field>
+           <field name="model">visitor.data</field>
+           <field name="arch" type="xml">
+               <kanban>
+                   <field name="id"/>
+                   <field name="v_name"/>
+                   <field name="v_phn"/>
+                   <field name="v_gender"/>
+                   <field name="v_address"/>
+                   <field name="v_image"/>
+                   <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img height="80" width="80" t-att-src="kanban_image('visitor.data', 'v_image', record.id.raw_value)" alt="image"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong>
+                                        <ul>
+                                            <li>Name :<field name="v_name"/></li>
+                                            <li>Phone:<field name="v_phn"/></li>
+                                            <li>Gender:<field name="v_gender"/></li>
+                                            <li>Address:<field name="v_address"/></li>
+                                        </ul>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+               </kanban>
+           </field>
+        </record>
+
+
+    <!--  Search View for  -->
+    <record id="visitor_search" model="ir.ui.view">
+       <field name="name">visitor.search</field>
+       <field name="model">visitor.data</field>
+        <field name="arch" type="xml">
+            <search string="search visitor">
+            <field name="visitor_seq" filter_domain="['|',('v_name', 'ilike', self),('v_phn', 'ilike', self)]"/>
+                <field name="v_name"/>
+                <field name="v_phn"/>
+                <separator/>
+                <filter string="Male" name="male" domain="[('v_gender', '=', 'male')]"/>
+                <filter string="Female" name="female" domain="[('v_gender', '=', 'female')]"/>
+                <group expand="0" string="Group-By">
+                    <filter string="Gender" name="v_gender" context="{'group_by': 'v_gender'}"/>
+                </group>
+            </search>
+       </field>
+    </record>
+    <!-- End Search View for  -->
+
+    <!-- Window Action  -->
+    <record id="action_visitor" model="ir.actions.act_window" >
+        <field name="name"> visitor </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">visitor.data</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+        <!-- Menu Sections  -->
+    <menuitem id="visitor_root" name="Visitor Management" sequence="1" />
+    <menuitem id="visitor" name="Visitor Profile" parent="visitor_root" action="action_visitor" sequence="1"/>
+</odoo>

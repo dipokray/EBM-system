@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <record id="test_inherit" model="ir.ui.view">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <field name="validity_date" position="replace">
+                    <field name="name_arjun"/>
+                </field>
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+            </xpath>
+<!--            <xpath expr="//field[@name='pricelist_id']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+<!--            <xpath expr="//page[@name='order_lines']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//page[@name='other_information']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+<!--            <xpath expr="//page[@name='customer_signature']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+<!--            <notebook position="attributes">-->
+<!--                <attribute name='invisible'>1</attribute>-->
+<!--            </notebook>-->
+
+            </field>
+        </record>
+
+    <!-- Window Action  -->
+
+    <record id="action_test1" model="ir.actions.act_window" >
+        <field name="name"> Test </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+        <!-- Menu Sections  -->
+    <menuitem id="visitor_root" name="Visitor Management" sequence="1" />
+<!--    <menuitem id="visitor" name="Visitor Profile" parent="visitor_root" action="action_visitor" sequence="1"/>-->
+    <menuitem id="test1" name="Inherit " parent="visitor_root" action="action_test1" sequence="5"/>
+
+</odoo>

@@ -28,7 +28,7 @@
             <tree sample="1" multi_edit="1" expand="1"> <!--  expand="1" for default filter means broke hbe -->
                 <!-- multi_edit="1" for edit any tree view data-->
                 <field name="sequence_no"/>
-                <field name="patient_name"/>
+                <field name="name"/>
                 <field name="responsible_id" optional="show"/>
                 <field name="gender" optional="show"/>
                 <field name="phone" optional="show"/>
@@ -84,7 +84,7 @@
                     <!--   End    -->
                     <group>
                         <group>
-                            <field name="patient_name"/>
+                            <field name="name"/>
                             <field name="responsible_id"/>
                             <field name="age"/>
 <!--                            <field name="appointment_count"/>-->
@@ -158,7 +158,7 @@
         <field name="arch" type="xml">
             <kanban sample="1" default_order="id asc">
                 <field name="id"/>
-                <field name="patient_name"/>
+                <field name="name"/>
                 <field name="gender"/>
                 <field name="phone"/>
                 <field name="age"/>
@@ -178,7 +178,7 @@
                                     </li>
                                     <li>
                                         Name :
-                                        <field name="patient_name"/>
+                                        <field name="name"/>
                                     </li>
                                     <li>
                                         Age :
@@ -209,7 +209,7 @@
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
             <search string="Patients">
-                <field name="patient_name"/>
+                <field name="name"/>
                 <field name="gender"/>
                 <field name="phone"/>
                 <field name="note"/>
@@ -219,7 +219,7 @@
                 <filter string="Other" name="other" domain="[('gender' , '=' , 'other')]"/>
                 <group expand="1" string="Group By">
                     <filter string="Patient Gender" name="patient_gender" context="{'group_by' : 'gender'}"/>
-                    <filter string="Patient Name" name="patient_name" context="{'group_by' : 'patient_name'}"/>
+                    <filter string="Patient Name" name="name" context="{'group_by' : 'name'}"/>
                     <filter string="Patient Age" name="age" context="{'group_by' : 'age'}"/>
                     <filter string="Phone Number" name="phone" context="{'group_by' : 'phone'}"/>
                 </group>
@@ -234,8 +234,8 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hospital.patient</field>
         <field name="view_mode">tree,kanban,form</field>
-        <!--<field name="context">{ 'search_default_patient_gender' : 1, 'search_default_patient_name' : 1}</field>-->
-        <field name="context">{ 'search_default_patient_name' : 1, 'search_default_male' : 1}</field>
+        <!--<field name="context">{ 'search_default_patient_gender' : 1, 'search_default_name' : 1}</field>-->
+        <field name="context">{ 'search_default_name' : 1, 'search_default_male' : 1}</field>
 
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

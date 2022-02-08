@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--    Tree view      -->
+    <record id="cashin_tree_view" model="ir.ui.view">
+        <field name="name">cashin.tree.view</field>
+        <field name="model">cashinbalance.cashinbalance</field>
+        <field name="arch" type="xml">
+            <tree string="Cash">
+                <field name="atk" sum="total"/>
+                <field name="btk" sum="total"/>
+                <field name="ctk" sum="total"/>
+                <field name="dtk" sum="total"/>
+                <field name="etk" sum="total"/>
+                <field name="ftk" sum="total"/>
+                <field name="gtk" sum="total"/>
+                <field name="htk" sum="total"/>
+                <field name="date"/>
+                <field name="total"/>
+                <field name="cash"/>
+                <field name="sum_atk"/>
+                <field name="sum_btk"/>
+                <field name="sum_ctk"/>
+                <field name="sum_dtk"/>
+                <field name="sum_etk"/>
+                <field name="sum_ftk"/>
+                <field name="sum_gtk"/>
+                <field name="sum_htk"/>
+            </tree>
+        </field>
+    </record>
+    <!-- End Tree View   -->
+
+    <!-- Form View for  -->
+    <record id="cashin_form_view" model="ir.ui.view">
+        <field name="name">cashin.form.view</field>
+        <field name="model">cashinbalance.cashinbalance</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group style="text-align:center" string="Yuko Leather Goods Ltd."/>
+                    <group style="text-align:center" string="Cash-In Details"/>
+                    <group>
+                        <group string="Tk-Quantity">
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="atk"/>
+                            <br/>
+                            <field name="btk"/>
+                            <br/>
+                            <field name="ctk"/>
+                            <br/>
+                            <field name="dtk"/>
+                            <br/>
+                            <field name="etk"/>
+                            <br/>
+                            <field name="ftk"/>
+                            <br/>
+                            <field name="gtk"/>
+                            <br/>
+                            <field name="htk"/>
+                            <br/>
+                            <field name="date"/>
+                            <br/>
+                        </group>
+                        <group>
+                            <field name="total"/>
+                            <br/>
+                            <field name="cash"/>
+                            <br/>
+                            <field name="sum_atk"/>
+                            <br/>
+                            <field name="sum_btk"/>
+                            <br/>
+                            <field name="sum_ctk"/>
+                            <br/>
+                            <field name="sum_dtk"/>
+                            <br/>
+                            <field name="sum_etk"/>
+                            <br/>
+                            <field name="sum_ftk"/>
+                            <br/>
+                            <field name="sum_gtk"/>
+                            <br/>
+                            <field name="sum_htk"/>
+                            <br/>
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_cashin" model="ir.actions.act_window" >
+        <field name="name"> Cash </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cashinbalance.cashinbalance</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="Cash_root" name="Cash Monitoring" sequence="1" />
+    <menuitem id="cash_in" name="Cash-In" parent="Cash_root" action="action_cashin"/>
+
+</odoo>

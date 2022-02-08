@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="export_tree_view" model="ir.ui.view">
+        <field name="name">export.tree.view</field>
+        <field name="model">exportindent.data</field>
+        <field name="arch" type="xml">
+            <tree string="Export">
+                <field name="customer_name"/>
+                <field name="po_no"/>
+                <field name="pi_no"/>
+                <field name="total_invoice_value"/>
+                <field name="ship_terms"/>
+                <field name="ship_by"/>
+                <field name="indent_no"/>
+                <field name="indent_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="export_form_view" model="ir.ui.view">
+        <field name="name">export.form.view</field>
+        <field name="model">exportindent.data</field>
+        <field name="arch" type="xml">
+            <form string="Export">
+                <sheet>
+                    <group style="text-align:center" string="Export Indent System."/>
+                    <group>
+                        <group>
+                            <field name="customer_name"/>
+                            <br/>
+                            <field name="po_no"/>
+                            <br/>
+                            <field name="pi_no"/>
+                            <br/>
+                            <field name="total_invoice_value"/>
+                        </group>
+                        <group>
+                            <field name="indent_no"/>
+                            <br/>
+                            <field name="ship_terms"/>
+                            <br/>
+                            <field name="ship_by"/>
+                            <br/>
+                            <field name="indent_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Bank Expenses">
+                            <field name="export_bank_exp_line">
+                                <tree editable="bottom">
+                                    <field name="export_bank_expense"/>
+                                    <field name="expo_bank" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="expo_cash" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="actual_expo_bank"/>
+                                    <field name="actual_expo_cash"/>
+                                    <field name="expected_total_bank"/>
+                                    <field name="actual_total_bank"/>
+                                    <field name="expo_remarks"/>
+                                    <field name="expo_bank_expense_line" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Shipping Document Expense">
+                            <field name="shipping_exp_line">
+                                <tree editable="bottom">
+                                    <field name="shipping_doc_exp"/>
+                                    <field name="shipping_bank" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="shipping_cash" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="actual_shipping_bank"/>
+                                    <field name="actual_shipping_cash"/>
+                                    <field name="expected_total_shipping"/>
+                                    <field name="actual_total_shipping"/>
+                                    <field name="shipping_remarks"/>
+                                    <field name="shipping_expense_line" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Transportation Cost ">
+                            <field name="expo_transportation_line">
+                                <tree editable="bottom">
+                                    <field name="expo_transportation_cost"/>
+                                    <field name="expo_transport_bank" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="expo_transport_cash" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="actual_trans_bank"/>
+                                    <field name="actual_trans_cash"/>
+                                    <field name="expected_total_transportation"/>
+                                    <field name="actual_total_transportation"/>
+                                    <field name="expo_transportation_remarks"/>
+                                    <field name="expo_transportation_cost_line" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="C and F Cost ">
+                            <field name="expo_cnf_line">
+                                <tree editable="bottom">
+                                    <field name="expo_cnf_cost"/>
+                                    <field name="expo_cnf_bank" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="expo_cnf_cash" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="actual_expo_cnf_bank"/>
+                                    <field name="actual_expo_cnf_cash"/>
+                                    <field name="expected_total_cnf"/>
+                                    <field name="actual_total_cnf"/>
+                                    <field name="expo_cnf_remarks"/>
+                                    <field name="expo_cnf_cost_line" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Forwarder Cost " attrs="{'invisible':[('ship_terms', '=', 'fob')]}">
+                            <field name="expo_forwarder_line">
+                                <tree editable="bottom">
+                                    <field name="expo_forwarder_cost"/>
+                                    <field name="expo_forwarder_bank" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="expo_forwarder_cash" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="actual_expo_forwarder_bank"/>
+                                    <field name="actual_expo_forwarder_cash"/>
+                                    <field name="expected_total_forwarder"/>
+                                    <field name="actual_total_forwarder"/>
+                                    <field name="expo_forwarder_remarks"/>
+                                    <field name="expo_forwarder_cost_line" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Courier Charge">
+                            <field name="expo_courier_line">
+                                <tree editable="bottom">
+                                    <field name="expo_courier_charge"/>
+                                    <field name="expo_courier_bank" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="expo_courier_cash" attrs="{'readonly':[('id','>', 0)]}"/>
+                                    <field name="actual_expo_courier_bank"/>
+                                    <field name="actual_expo_courier_cash"/>
+                                    <field name="expected_total_courier"/>
+                                    <field name="actual_total_courier"/>
+                                    <field name="expo_courier_remarks"/>
+                                    <field name="expo_courier_cost_line" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <notebook>
+                        <group string="Bank Expense total">
+                            <group>
+                                <field name="total_bank_value"/>
+                            </group>
+                            <group>
+                                <field name="total_bank_actual"/>
+                            </group>
+                            <group>
+                                <field name="final_bank_exp"/>
+                            </group>
+                        </group>
+                        <group string="Total Shipping Cost">
+                            <group>
+                                <field name="total_shipping_value"/>
+                            </group>
+                            <group>
+                                <field name="total_shipping_actual"/>
+                            </group>
+                            <group>
+                                <field name="final_shipping"/>
+                            </group>
+                        </group>
+                        <group string="Transportation Total">
+                            <group>
+                                <field name="total_transportation_value"/>
+                            </group>
+                            <group>
+                                <field name="total_transportation_actual"/>
+                            </group>
+                            <group>
+                                <field name="final_transportation"/>
+                            </group>
+                        </group>
+                        <group string="C N F Total">
+                            <group>
+                                <field name="total_cnf_value"/>
+                            </group>
+                            <group>
+                                <field name="total_cnf_actual"/>
+                            </group>
+                            <group>
+                                <field name="final_cnf"/>
+                            </group>
+                        </group>
+                        <group string="Total Forwarder Cost">
+                            <group>
+                                <field name="total_forwarder_value"/>
+                            </group>
+                            <group>
+                                <field name="total_forwarder_actual"/>
+                            </group>
+                            <group>
+                                <field name="final_forwarder"/>
+                            </group>
+                        </group>
+                        <group string="Total Courier Cost">
+                            <group>
+                                <field name="total_courier_value"/>
+                            </group>
+                            <group>
+                                <field name="total_courier_actual"/>
+                            </group>
+                            <group>
+                                <field name="final_courier"/>
+                            </group>
+                        </group>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+            <!--  Search View for  -->
+    <record id="export_indent_search" model="ir.ui.view">
+       <field name="name">export.indent.search</field>
+       <field name="model">exportindent.data</field>
+        <field name="arch" type="xml">
+            <search string="search Indent">
+            <field name="indent_no" filter_domain="['|',('indent_no', 'ilike', self),('customer_name', 'ilike', self)]"/>
+                <field name="customer_name"/>
+                <field name="indent_no"/>
+                <separator/>
+                <filter string="FOB" name="fob" domain="[('ship_terms', '=', 'fob')]"/>
+                <filter string="CNF" name="cnf" domain="[('ship_terms', '=', 'cnf')]"/>
+                <group expand="0" string="Group-By">
+                    <filter string="Shipping Terms" name="ship_terms" context="{'group_by': 'ship_terms'}"/>
+                </group>
+                <group expand="0" string="Group-By">
+                    <filter string="Shipping By" name="ship_by" context="{'group_by': 'ship_by'}"/>
+                </group>
+            </search>
+       </field>
+    </record>
+    <!-- End Search View for  -->
+
+    <record id="action_export_indent" model="ir.actions.act_window" >
+        <field name="name"> Export </field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">exportindent.data</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+    <menuitem id="import_indent_root" name="Indent" sequence="1"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="export" name="Export" parent="import_indent_root" action="action_export_indent"/>
+</odoo>

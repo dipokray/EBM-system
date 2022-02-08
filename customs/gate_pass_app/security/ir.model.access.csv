@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gate_data,access.gate.data,model_gate_data,,1,1,1,1
+access_user,Access.gate.user,model_gate_data,group_gate_user,1,1,0,0

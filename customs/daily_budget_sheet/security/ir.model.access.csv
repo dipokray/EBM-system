@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_daily_budget_audit,access.dailybudget_audit,daily_budget_sheet.model_dailybudget_new,,1,1,1,1
+access_daily_budget_management,access.dailybudget_management,daily_budget_sheet.model_dailybudget_new,,1,1,1,1
+access_daily_budget_accounts,access.dailybudget_accounts,daily_budget_sheet.model_dailybudget_new,,1,1,1,1
+
+
+

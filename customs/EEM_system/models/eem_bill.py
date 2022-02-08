@@ -1,3 +1,5 @@
+# Emu Mumu Kwikwi @2022
+
 from datetime import datetime
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
@@ -183,40 +185,35 @@ class EemBilling(models.Model):
     # Get automatic department after selecting employee
     @api.onchange('employee_id')
     def onchange_employee_id(self):
-        if self.employee_id:
-            if self.employee_id.department_id.name:
-                self.expense_dept = self.employee_id.department_id.name
-        else:
-            self.expense_dept = ''
+        for billing in self:
+            if billing.employee_id:
+                if billing.employee_id.department_id.name:
+                    billing.expense_dept = billing.employee_id.department_id.name
+            else:
+                billing.expense_dept = ''
 
     @api.onchange('reference_id')
     def onchange_reference_id(self):
-        if self.reference_id:
-            if self.reference_id.employee_id:
-                self.employee_id = self.reference_id.employee_id
-            if self.reference_id.expense_dept:
-                self.expense_dept = self.reference_id.expense_dept
-            if self.reference_id.purpose:
-                self.purpose = self.reference_id.purpose
-            if self.reference_id.total_pre_costing_amount:
-                self.requested_amount = self.reference_id.total_pre_costing_amount
-            if self.reference_id.purchase:
-                self.purchase = self.reference_id.purchase
-            if self.reference_id.miscellaneous:
-                self.miscellaneous = self.reference_id.miscellaneous
-            if self.reference_id.gift_donation:
-                self.gift_donation = self.reference_id.gift_donation
-            if self.reference_id.printing_stationery:
-                self.printing_stationery = self.reference_id.printing_stationery
-
-        else:
-            self.employee_id = ''
-            self.expense_dept = ''
-            self.purpose = ''
-            self.purchase = ''
-            self.miscellaneous = ''
-            self.gift_donation = ''
-            self.printing_stationery = ''
+        for billing in self:
+            reference_id = billing.reference_id
+            if billing.reference_id:
+                billing.purchase = reference_id.purchase
+                billing.employee_id = reference_id.employee_id
+                billing.expense_dept = reference_id.expense_dept
+                billing.purpose = reference_id.purpose
+                billing.requested_amount = reference_id.total_pre_costing_amount
+                billing.miscellaneous = reference_id.miscellaneous
+                billing.gift_donation = reference_id.gift_donation
+                billing.printing_stationery = reference_id.printing_stationery
+            else:
+                billing.purchase = False
+                billing.employee_id = ''
+                billing.expense_dept = ''
+                billing.purpose = ''
+                billing.requested_amount = 0.0
+                billing.miscellaneous = False
+                billing.gift_donation = False
+                billing.printing_stationery = False
 
     @api.onchange('reference_id')
     def onchange_entertainment_reference_id(self):

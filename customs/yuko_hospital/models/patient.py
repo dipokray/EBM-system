@@ -8,7 +8,7 @@ class HospitalPatient(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Hospital Patient"
     _order = "sequence_no desc"  # For ordering asc or dsc in tree view
-    _rec_name = 'patient_name'
+    _rec_name = 'name'
 
     # Default_get Function
     @api.model
@@ -21,7 +21,7 @@ class HospitalPatient(models.Model):
 
     sequence_no = fields.Char(string='Patient ID', required=True, copy=False, readonly=True, default=lambda
         self: _('New'))  # sequence_id
-    patient_name = fields.Char(string='Name', required=True, tracking=True)
+    name = fields.Char(string='Name', required=True, tracking=True)
     age = fields.Integer(string='Age', tracking=True)
     gender = fields.Selection([
         ('male', 'Male'),
@@ -81,12 +81,12 @@ class HospitalPatient(models.Model):
 
     # duplicate name  can't use function'
 
-    @api.constrains('patient_name')
+    @api.constrains('name')
     def check_name(self):
         for rec in self:  # For avoiding singleton error
-            patients = self.env['hospital.patient'].search([('patient_name', '=', rec.patient_name), ('id', '!=', rec.id)])
+            patients = self.env['hospital.patient'].search([('name', '=', rec.name), ('id', '!=', rec.id)])
             if patients:
-                raise ValidationError(_("Name %s already Exists !!." % rec.patient_name))
+                raise ValidationError(_("Name %s already Exists !!." % rec.name))
 
     # force somethings to fillup before creating and editing the record
     # field validation
@@ -103,9 +103,9 @@ class HospitalPatient(models.Model):
     # def name_get(self):
     #     res = []  # Empty list that can store the list data
     #     for rec in self:
-    #         # res.append((rec.id, '%s - %s ' % (rec.sequence_no, rec.patient_name)))
+    #         # res.append((rec.id, '%s - %s ' % (rec.sequence_no, rec.name)))
     #         # Method:2
-    #         name= rec.sequence_no + '--' + rec.patient_name
+    #         name= rec.sequence_no + '--' + rec.name
     #         res.append((rec.id, name))
     #     return res
 
@@ -114,7 +114,7 @@ class HospitalPatient(models.Model):
     def name_search(self, name='', args=None, operator='ilike', limit=100):
         if args is None:
             args = []
-        domain = args + ['|', ('sequence_no', operator, name), ('patient_name', operator, name)]
+        domain = args + ['|', ('sequence_no', operator, name), ('name', operator, name)]
         return super(HospitalPatient, self).search(domain, limit=limit).name_get()
 
     # Smart Appointment button action for view

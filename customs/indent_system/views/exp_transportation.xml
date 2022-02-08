@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="exptransportation_tree_view" model="ir.ui.view">
+        <field name="name">exptransportation.tree.view</field>
+        <field name="model">dynamic.exptransportation</field>
+        <field name="arch" type="xml">
+            <tree string="Import">
+                <field name="dynamic_for_exptransportation"/>
+                <field name="conf_expo_transport_bank"/>
+                <field name="conf_expo_transport_cash"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="exptransportation_form" model="ir.ui.view">
+        <field name="name">exptransportation.form.view</field>
+        <field name="model">dynamic.exptransportation</field>
+        <field name="arch" type="xml">
+            <form string="dynamic">
+                <sheet>
+                    <group>
+                        <field name="dynamic_for_exptransportation"/>
+                        <br/>
+                        <field name="conf_expo_transport_bank"/>
+                        <br/>
+                        <field name="conf_expo_transport_cash"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_exptransportation" model="ir.actions.act_window" >
+        <field name="name">EXPORT Transportation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dynamic.exptransportation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+ <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+    <menuitem id="import_indent_root" name="Indent" sequence="1"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="dynamic_bank" name="Configure" parent="import_indent_root" action="action_import_dynamic_bank"/>
+    <menuitem id="export_indent" name="Export Bank Expense" parent="dynamic_bank" />
+    <menuitem id="exp_transportation" name="Export Transportation " parent="export_indent" action="action_exptransportation"/>
+
+</odoo>

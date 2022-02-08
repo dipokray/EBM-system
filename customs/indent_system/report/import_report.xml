@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_import_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Import Report Documents</h2>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-2">
+                                <strong>Customer Name:</strong>
+                                <p t-field="o.customer_name"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Indent No:</strong>
+                                <p t-field="o.indent_no"/>
+                            </div>
+
+                            <div class="col-2">
+                                <strong>Indent_date :</strong>
+                                <p t-field="o.indent_date"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Expected Documentation :</strong>
+                                <p t-field="o.total_doc_value"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Actual Documentation  Cost:</strong>
+                                <p t-field="o.total_doc_actual"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Final calculation:</strong>
+                                <p t-field="o.final_doc"/>
+                            </div>
+                        </div>
+
+<!--                        <table class="table table-sm">-->
+<!--                            <thead>-->
+<!--                                <tr>-->
+<!--                                    <th>Date</th>-->
+<!--                                    <th>Name</th>-->
+<!--                                    <th class="text-center">Ref.</th>-->
+<!--                                    <th>Unit Price</th>-->
+<!--                                    <th>Taxes</th>-->
+<!--                                    <th class="text-center">Qty</th>-->
+<!--                                    <th class="text-right">Price</th>-->
+<!--                                    <th t-if="o.is_multiple_currency" class="text-right">Price in Company Currency</th>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                                <tr t-foreach="o.expense_line_ids" t-as="line">-->
+<!--                                    <td><span t-field="line.date"/></td>-->
+<!--                                    <td>-->
+<!--                                        <span t-field="line.name"/>-->
+<!--                                        <span t-field="line.description"/><br/>-->
+<!--                                        <span t-field="line.analytic_account_id.name"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-center">-->
+<!--                                        <span t-field="line.reference"/>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <span t-field="line.unit_amount"/>-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        <t t-foreach="line.tax_ids" t-as="tax">-->
+<!--                                          <t t-if="tax.description">-->
+<!--                                            <span t-field="tax.description"/>-->
+<!--                                          </t>-->
+<!--                                          <t t-if="not tax.description">-->
+<!--                                            <span t-field="tax.name"/>-->
+<!--                                          </t>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                    <td class="text-center">-->
+<!--                                        <span t-field="line.quantity"/>-->
+<!--                                    </td>-->
+<!--                                    <td class="text-right">-->
+<!--                                        <span t-field="line.total_amount"-->
+<!--                                            t-options='{"widget": "monetary", "display_currency": line.currency_id}'/>-->
+<!--                                    </td>-->
+<!--                                    <td t-if="o.is_multiple_currency" class="text-right">-->
+<!--                                        <span t-field="line.total_amount_company"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+
+<!--                        <div class="row justify-content-end">-->
+<!--                            <div class="col-4">-->
+<!--                                <table class="table table-sm">-->
+<!--                                    <tr class="border-black">-->
+<!--                                        <td><strong>Total</strong></td>-->
+<!--                                        <td class="text-right">-->
+<!--                                            <span t-field="o.total_amount"-->
+<!--                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </table>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <p>Certified honest and conform,<br/>(Date and signature).<br/><br/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="report_import_bank">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Import Report Bank Expense</h2>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-2">
+                                <strong>Customer Name:</strong>
+                                <p t-field="o.customer_name"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Indent No:</strong>
+                                <p t-field="o.indent_no"/>
+                            </div>
+
+                            <div class="col-2">
+                                <strong>Indent_date :</strong>
+                                <p t-field="o.indent_date"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Expected Bank Expense :</strong>
+                                <p t-field="o.total_bank_value"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Actual Bank  Cost:</strong>
+                                <p t-field="o.total_bank_actual"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Final Calculation:</strong>
+                                <p t-field="o.final_bank_exp"/>
+                            </div>
+                        </div>
+                        <p>Certified honest and conform,<br/>(Date and signature).<br/><br/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+
+    <template id="report_import_transportation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Import Report Transportation</h2>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-2">
+                                <strong>Customer Name:</strong>
+                                <p t-field="o.customer_name"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Indent No:</strong>
+                                <p t-field="o.indent_no"/>
+                            </div>
+
+                            <div class="col-2">
+                                <strong>Indent_date :</strong>
+                                <p t-field="o.indent_date"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Expected Transportation Expense :</strong>
+                                <p t-field="o.total_transportation_value"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Actual Transportation  Cost:</strong>
+                                <p t-field="o.total_transportation_actual"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Final Calculation:</strong>
+                                <p t-field="o.final_transportation"/>
+                            </div>
+                        </div>
+                        <p>Certified honest and conform,<br/>(Date and signature).<br/><br/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_import_cnf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Import Report CNF</h2>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-2">
+                                <strong>Customer Name:</strong>
+                                <p t-field="o.customer_name"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Indent No:</strong>
+                                <p t-field="o.indent_no"/>
+                            </div>
+
+                            <div class="col-2">
+                                <strong>Indent_date :</strong>
+                                <p t-field="o.indent_date"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Expected CNF Expense :</strong>
+                                <p t-field="o.total_cnf_value"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Actual CNF  Cost:</strong>
+                                <p t-field="o.total_cnf_actual"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Final Calculation:</strong>
+                                <p t-field="o.final_cnf"/>
+                            </div>
+                        </div>
+                        <p>Certified honest and conform,<br/>(Date and signature).<br/><br/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_import_forwarder">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Import Report Forwarder</h2>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-2">
+                                <strong>Customer Name:</strong>
+                                <p t-field="o.customer_name"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Indent No:</strong>
+                                <p t-field="o.indent_no"/>
+                            </div>
+
+                            <div class="col-2">
+                                <strong>Indent_date :</strong>
+                                <p t-field="o.indent_date"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Expected Forwarder Expense :</strong>
+                                <p t-field="o.total_forwarder_value"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Actual Forwarder  Cost:</strong>
+                                <p t-field="o.total_forwarder_actual"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Final Calculation:</strong>
+                                <p t-field="o.final_forwarder"/>
+                            </div>
+                        </div>
+                        <p>Certified honest and conform,<br/>(Date and signature).<br/><br/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_import_courier">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Import Report Courier</h2>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-2">
+                                <strong>Customer Name:</strong>
+                                <p t-field="o.customer_name"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Indent No:</strong>
+                                <p t-field="o.indent_no"/>
+                            </div>
+
+                            <div class="col-2">
+                                <strong>Indent_date :</strong>
+                                <p t-field="o.indent_date"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Expected Courier Expense :</strong>
+                                <p t-field="o.total_courier_value"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Actual Courier  Cost:</strong>
+                                <p t-field="o.total_courier_actual"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Final Calculation:</strong>
+                                <p t-field="o.final_courier"/>
+                            </div>
+                        </div>
+                        <p>Certified honest and conform,<br/>(Date and signature).<br/><br/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_import_insurance">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Import Report Insurance</h2>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-2">
+                                <strong>Customer Name:</strong>
+                                <p t-field="o.customer_name"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Indent No:</strong>
+                                <p t-field="o.indent_no"/>
+                            </div>
+
+                            <div class="col-2">
+                                <strong>Indent_date :</strong>
+                                <p t-field="o.indent_date"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Expected Insurance Expense :</strong>
+                                <p t-field="o.total_insurance_value"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Actual insurance  Cost:</strong>
+                                <p t-field="o.total_insurance_actual"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Final Calculation:</strong>
+                                <p t-field="o.final_insurance"/>
+                            </div>
+                        </div>
+                        <p>Certified honest and conform,<br/>(Date and signature).<br/><br/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <report
+        id="action_report_import_document"
+        string="Import Report Document"
+        model="importindent.data"
+        report_type="qweb-pdf"
+        name="indent_system.report_import_document"
+        file="indent_system.report_import_document"
+        print_report_name="'Import - %s - %s' % (object.indent_no, (object.indent_no))"
+    />
+
+
+    <report
+        id="action_report_import_bank"
+        string="Import Report Bank"
+        model="importindent.data"
+        report_type="qweb-pdf"
+        name="indent_system.report_import_bank"
+        file="indent_system.report_import_bank"
+        print_report_name="'Import - %s - %s' % (object.indent_no, (object.indent_no))"
+    />
+
+    <report
+        id="action_report_import_transportation"
+        string="Import Report Transportation"
+        model="importindent.data"
+        report_type="qweb-pdf"
+        name="indent_system.report_import_transportation"
+        file="indent_system.report_import_transportation"
+        print_report_name="'Import - %s - %s' % (object.indent_no, (object.indent_no))"
+    />
+
+    <report
+        id="action_report_import_cnf"
+        string="Import Report CNF"
+        model="importindent.data"
+        report_type="qweb-pdf"
+        name="indent_system.report_import_cnf"
+        file="indent_system.report_import_cnf"
+        print_report_name="'Import - %s - %s' % (object.indent_no, (object.indent_no))"
+    />
+
+    <report
+        id="action_report_import_forwarder"
+        string="Import Report Forwarder"
+        model="importindent.data"
+        report_type="qweb-pdf"
+        name="indent_system.report_import_forwarder"
+        file="indent_system.report_import_forwarder"
+        print_report_name="'Import - %s - %s' % (object.indent_no, (object.indent_no))"
+    />
+
+    <report
+        id="action_report_import_courier"
+        string="Import Report Courier"
+        model="importindent.data"
+        report_type="qweb-pdf"
+        name="indent_system.report_import_courier"
+        file="indent_system.report_import_courier"
+        print_report_name="'Import - %s - %s' % (object.indent_no, (object.indent_no))"
+    />
+
+    <report
+        id="action_report_import_insurance"
+        string="Import Report Insurance"
+        model="importindent.data"
+        report_type="qweb-pdf"
+        name="indent_system.report_import_insurance"
+        file="indent_system.report_import_insurance"
+        print_report_name="'Import - %s - %s' % (object.indent_no, (object.indent_no))"
+    />
+
+
+
+</odoo>

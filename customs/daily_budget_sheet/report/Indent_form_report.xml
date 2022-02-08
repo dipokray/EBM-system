@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_daily_budget_sheet">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Indent Report</h2>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-2">
+                                <strong>Current Date:</strong>
+                                <p t-field="o.today_date_time"/>
+                            </div>
+                            <div class="col-2">
+                                <strong>Reference:</strong>
+                                <p t-field="o.Indent_No"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Indentor:</strong>
+                                <p t-field="o.indentor"/>
+                            </div>
+
+                            <div class="col-3">
+                                <strong>Department:</strong>
+                                <p t-field="o.Indent_No"/>
+                            </div>
+                             <div class="col-2">
+                                <strong>Particular:</strong>
+                                <p t-field="o.particular"/>
+                            </div>
+                              <div class="col-2">
+                                <strong>Priority:</strong>
+                                <p t-field="o.Priority"/>
+                            </div>
+                              <div class="col-2">
+                                <strong>Required Date:</strong>
+                                <p t-field="o.required_Data_time"/>
+                            </div>
+
+                        </div>
+
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Product Quantity</th>
+<!--                                    <th class="text-center">Ref.</th>-->
+                                    <th>Price</th>
+                                    <th>Payment Type</th>
+                                    <th class="text-center">Expected Total</th>
+                                    <th class="text-center">Actual Total</th>
+                                    <th class="text-center">Excess Amount</th>
+                                    <th class="text-center">Return Amount</th>
+                                    <th class="text-center">Remarks</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.roni" t-as="line">
+                                    <td><span t-field="line.product_id"/></td>
+
+                                    <td style="text-center"> <span t-field="line.product_qty"/> </td>
+                                     <td style="text-center">   <span t-field="line.price"/><br/></td>
+                                      <td style="text-center"> <span t-field="line.Payment_type"/></td>
+
+
+                                    <td style="text-center"> <span t-field="line.expected_total"/></td>
+
+                                    <td style="text-center">    <span t-field="line.actual_total"/></td>
+
+
+
+                                    <td style="text-center"> <span t-field="line.excess_amount"/> </td>
+                                    <td style="text-center">    <span t-field="line.return_amount"/> </td>
+                                    <td style="text-center">   <span t-field="line.remarks"/> </td>
+
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                          <div class="row justify-content-end">
+                            <div class="col-4">
+                                <table class="table table-sm">
+                                    <tr class="border-black" t-as="o">
+                                        <td><strong>Total</strong></td>
+                                        <td class="text-right">
+
+                                     <strong>     <span t-field="o.total_amount"/> </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                        <div id="auth" class="row mt32 mb32">
+                        <div class="col-4 bm-2">
+                        <strong>Prepared By</strong>
+                        </div>
+                        <div class="col-4 bm-2">
+                        <strong> Checked By</strong>
+                        </div>
+                        <div class="col-4 bm-2">
+                        <strong>Authorized By</strong>
+                        </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <report
+        id="action_report_daily_budget_sheet"
+        string="Indent Report"
+        model="dailybudget.new"
+        report_type="qweb-pdf"
+        name="daily_budget_sheet.report_daily_budget_sheet"
+        file="daily_budget_sheet.report_daily_budget_sheet"
+        print_report_name="'Import - %s - %s' % (object.indentor, (object.indentor))"
+    />
+
+</odoo>

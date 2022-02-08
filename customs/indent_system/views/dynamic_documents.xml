@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="import_dynamic_documents_tree_view" model="ir.ui.view">
+        <field name="name">documents.tree.view</field>
+        <field name="model">dynamic.importdocuments</field>
+        <field name="arch" type="xml">
+            <tree string="Import">
+                <field name="dynamic_for_documents"/>
+                <field name="conf_doc_bank"/>
+                <field name="conf_doc_cash"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dynamic_documents_form" model="ir.ui.view">
+        <field name="name">documents.form.view</field>
+        <field name="model">dynamic.importdocuments</field>
+        <field name="arch" type="xml">
+            <form string="dynamic">
+                <sheet>
+                    <group>
+                        <field name="dynamic_for_documents"/>
+                        <br/>
+                        <field name="conf_doc_bank"/>
+                        <br/>
+                        <field name="conf_doc_cash"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_import_dynamic_documents" model="ir.actions.act_window" >
+        <field name="name">documents</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dynamic.importdocuments</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+ <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+    <menuitem id="import_indent_root" name="Indent" sequence="1"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="dynamic_bank" name="Configure" parent="import_indent_root" action="action_import_dynamic_bank"/>
+    <menuitem id="import_doc" name="Import Documents" parent="dynamic_bank" action="action_import_dynamic_documents"/>
+
+</odoo>

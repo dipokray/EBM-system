@@ -1,0 +1,117 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<odoo>-->
+<!--    &lt;!&ndash;    Tree view      &ndash;&gt;-->
+<!--    <record id="re_visit_tree_view" model="ir.ui.view">-->
+<!--        <field name="name">visitor.tree.view</field>-->
+<!--        <field name="model">re.visit</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <tree string="re_visit">-->
+<!--                <field name="visitor_name"/>-->
+<!--                <field name="v_name"/>-->
+<!--                <field name="v_image"/>-->
+<!--                <field name="v_phn"/>-->
+<!--                <field name="v_email"/>-->
+<!--                <field name="v_gender"/>-->
+<!--                <field name="v_company"/>-->
+<!--                <field name="v_address"/>-->
+<!--                <field name="employee_id"/>-->
+<!--                <field name="image_1920"/>-->
+<!--                <field name="work_phone"/>-->
+<!--                <field name="dept"/>-->
+<!--                <field name="job_title"/>-->
+<!--                <field name="check_in_date"/>-->
+<!--                <field name="check_out_date"/>-->
+<!--            </tree>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    &lt;!&ndash; End Tree View   &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Form View for  &ndash;&gt;-->
+<!--    <record id="re-visit_form_view" model="ir.ui.view">-->
+<!--        <field name="name">re-visit.form.view</field>-->
+<!--        <field name="model">re.visit</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form>-->
+<!--                <sheet>-->
+<!--                    <group style="text-align:center" string="WELCOME TO YUKO LEATHER GOODS LTD."/>-->
+<!--                    <group style="text-align:center" string="Please Select Your Information"/>-->
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="visitor_name"/>-->
+<!--                            <br/>-->
+<!--                            <field name="v_name"/>-->
+<!--                            <br/>-->
+<!--                            <field name="v_phn"/>-->
+<!--                            <br/>-->
+<!--                            <field name="v_email"/>-->
+<!--                            <br/>-->
+<!--                            <field name="v_gender"/>-->
+<!--                            <br/>-->
+<!--                            <field name="v_address"/>-->
+<!--                            <br/>-->
+<!--                            <field name="v_company"/>-->
+<!--                            <br/>-->
+<!--                            <field style="height:50px; width:50px;" name="v_image" widget="image"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="employee_id"/>-->
+<!--                            <br/>-->
+<!--                            <field style="height:50px; width:50px;" name="image_1920" widget="image"/>-->
+<!--                            <br/>-->
+<!--                            <field name="work_phone"/>-->
+<!--                            <br/>-->
+<!--                            <field name="dept"/>-->
+<!--                            <br/>-->
+<!--                            <field name="job_title"/>-->
+<!--                            <br/>-->
+<!--                            <field name="check_in_date"/>-->
+<!--                            <br/>-->
+<!--                            <field name="check_out_date"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </sheet>-->
+<!--                    &lt;!&ndash; Add Chatter Form View for  &ndash;&gt;-->
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                    <field name="activity_ids" widget="mail_activity"/>-->
+<!--                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>-->
+<!--                </div>-->
+<!--                    &lt;!&ndash; End Add chatter Form View for  &ndash;&gt;-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    &lt;!&ndash; End Form View for  &ndash;&gt;-->
+
+<!--    &lt;!&ndash;  Search View for  &ndash;&gt;-->
+<!--    <record id="re-visit_search" model="ir.ui.view">-->
+<!--       <field name="name">re-visit.search</field>-->
+<!--       <field name="model">re.visit</field>-->
+<!--        <field name="arch"  type="xml">-->
+<!--            <search string="search visitor">-->
+<!--            <field name="v_phn" filter_domain="['|',('v_name', 'ilike', self),('v_phn', 'ilike', self)]"/>-->
+<!--                <field name="v_name"/>-->
+<!--                <field name="v_phn"/>-->
+<!--                <separator/>-->
+<!--                <filter string="Male" name="male" domain="[('v_gender', '=', 'male')]"/>-->
+<!--                <filter string="Female" name="female" domain="[('v_gender', '=', 'female')]"/>-->
+<!--&lt;!&ndash;                <group expand="0" string="Group-By">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <filter string="Gender" name="v_gender" context="{'group_by': 'v_gender'}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                </group>&ndash;&gt;-->
+<!--            </search>-->
+<!--       </field>-->
+<!--    </record>-->
+<!--    &lt;!&ndash; End Search View for  &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Window Action  &ndash;&gt;-->
+<!--    <record id="action_re_visitor" model="ir.actions.act_window" >-->
+<!--        <field name="name"> Re_visitor </field>-->
+<!--        <field name="type">ir.actions.act_window</field>-->
+<!--        <field name="res_model">re.visit</field>-->
+<!--        <field name="view_mode">tree,form</field>-->
+<!--    </record>-->
+
+<!--        &lt;!&ndash; Menu Sections  &ndash;&gt;-->
+<!--    <menuitem id="visitor_root" name="Visitor Management" sequence="1" />-->
+<!--    <menuitem id="re-visit" name="Re-Visit" parent="visitor_root" action="action_re_visitor"/>-->
+
+<!--</odoo>-->
